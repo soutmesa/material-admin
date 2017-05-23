@@ -1,17 +1,30 @@
 <!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--<![endif]-->
 
+<!-- Mirrored from seantheme.com/color-admin-v2.2/admin/material/login_v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 May 2017 02:01:41 GMT -->
+<head>
+    <meta charset="utf-8" />
+    <title>Color Admin | @yield ('title')</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Styles -->
-    <link href="/assets/css/app.css" rel="stylesheet">
+    
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/animate.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/style.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/style-responsive.min.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/theme/default.css') }}" rel="stylesheet" id="theme" />
+    <!-- ================== END BASE CSS STYLE ================== -->
 
     <!-- Scripts -->
     <script>
@@ -19,69 +32,69 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+
+    @yield ('stylesheet')
+
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+<body class="pace-top">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        @yield('content')
+    <!-- begin #page-loader -->
+    <div id="page-loader">
+        <div class="material-loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+            </svg>
+            <div class="message">Loading...</div>
+        </div>
     </div>
+    <!-- end #page-loader -->
+    
+    @yield ('content')
+    
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{{ asset('assets/plugins/jquery/jquery-1.9.1.min.js')}} "></script>
+    <script src="{{ asset('assets/plugins/jquery/jquery-migrate-1.1.0.min.js')}} "></script>
+    <script src="{{ asset('assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js')}} "></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js')}} "></script>
+    <!--[if lt IE 9]>
+        <script src="assets/crossbrowserjs/html5shiv.js"></script>
+        <script src="assets/crossbrowserjs/respond.min.js"></script>
+        <script src="assets/crossbrowserjs/excanvas.min.js"></script>
+    <![endif]-->
 
-    <!-- Scripts -->
-    <script src="/assets/js/app.js"></script>
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{{ asset('assets/plugins/pace/pace.min.js')}} "></script>
+    <!-- ================== END BASE JS ================== -->
+
+    <script src="{{ asset('assets/plugins/slimscroll/jquery.slimscroll.min.js')}} "></script>
+    <script src="{{ asset('assets/plugins/jquery-cookie/jquery.cookie.js')}} "></script>
+    <!-- ================== END BASE JS ================== -->
+    
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="{{ asset('assets/js/login-v2.demo.min.js')}} "></script>
+    <script src="{{ asset('assets/js/apps.min.js')}} "></script>
+    <!-- ================== END PAGE LEVEL JS ================== -->
+
+    <script>
+        $(document).ready(function() {
+            App.init();
+            LoginV2.init();
+        });
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-53034621-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    @yield ('scripts')
+
 </body>
+
+<!-- Mirrored from seantheme.com/color-admin-v2.2/admin/material/login_v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 May 2017 02:05:24 GMT -->
 </html>

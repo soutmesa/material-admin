@@ -11,10 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Back End Routes
+Route::get('/admin', function () {
+    return Auth::check()? redirect('/home') : redirect('login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+// End Back End Routes
+
+// Front End Routes
+Route::get('/', function(){
+
+});
+
+// End Front End Routes
