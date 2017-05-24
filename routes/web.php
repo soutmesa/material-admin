@@ -13,18 +13,27 @@
 
 // Back End Routes
 Route::get('/admin', function () {
-    return Auth::check()? redirect('/home') : redirect('login');
+    return Auth::check()? redirect('/dashboard') : redirect('login');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/dashboard', 'HomeController@index');
 
 // End Back End Routes
 
 // Front End Routes
-Route::get('/', function(){
 
+Route::get('/', 'FrontEndController@index');
+
+Route::get('contact', 'FrontEndController@contact');
+
+Route::get('about', 'FrontEndController@about');
+
+Route::group(['prefix'=>'posts-page'], function(){
+	Route::get('', 'FrontEndController@allPosts');
+	Route::get('detail', 'FrontEndController@singlePost');
 });
 
 // End Front End Routes
+
