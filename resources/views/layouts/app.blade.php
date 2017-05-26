@@ -26,6 +26,9 @@
     <link href="{{ asset('assets/css/theme/default.css') }}" rel="stylesheet" id="theme" />
     <!-- ================== END BASE CSS STYLE ================== -->
 
+    <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr@2.6.3/dist/themes/material_blue.css">
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([

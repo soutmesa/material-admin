@@ -74,7 +74,7 @@
                         <label class="control-label">Date Of Birth <span class="text-danger">*</span></label>
                         <div class="row m-b-15">
                             <div class="col-md-12">
-                                <input type="text" class="form-control" id="datepicker-default" placeholder="Select Date" value="04/1/2014" />
+                                <input type="text" class="form-control flatpickr" id="datepicker-default" placeholder="Select Date" value="" />
                             </div>
                         </div>
                         
@@ -174,4 +174,16 @@
     </div>
     <!-- end page container -->
 
+@endsection
+
+@section ('scripts')
+    <script type="text/javascript" src="https://unpkg.com/flatpickr"></script>
+    <script type="text/javascript">
+        flatpickr('#datepicker-default', {
+            theme: 'material_blue',
+            dateFormat: 'Y-m-d',
+            minDate: '1920-01-01',
+            maxDate: '1999-01-01',
+        });
+    </script>
 @endsection

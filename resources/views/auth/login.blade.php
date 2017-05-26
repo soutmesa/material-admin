@@ -137,3 +137,23 @@
     <!-- end page container -->
 
 @endsection
+
+@section ('scripts')
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            var getleng = $('.login-bg-list li').length;
+            var x =1;
+            var startslt = ".login-bg-list li:nth-child(";
+            var endslt = ") > a";
+            function displayNext() {
+                x = (x === getleng) ? 1 : x + 1;
+                $(startslt + x + endslt).click();
+            }
+
+            setInterval(displayNext, 10000);
+        });
+    </script>
+
+@endsection

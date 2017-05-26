@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="index-2.html" class="navbar-brand">
+                <a href="{{ url('/') }}" class="navbar-brand">
                     <span class="brand-logo"></span>
                     <span class="brand-text">
                         COLOR ADMIN
