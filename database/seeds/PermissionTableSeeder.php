@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Permission;
+use App\Databases\Permission;
 
 class PermissionTableSeeder extends Seeder
 {
@@ -35,24 +35,24 @@ class PermissionTableSeeder extends Seeder
         		'description' => 'Delete Role'
         	],
         	[
-        		'name' => 'item-list',
-        		'display_name' => 'Display Item Listing',
-        		'description' => 'See only Listing Of Item'
+        		'name' => 'post-list',
+        		'display_name' => 'Display Post Listing',
+        		'description' => 'See only Listing Of Post'
         	],
         	[
-        		'name' => 'item-create',
-        		'display_name' => 'Create Item',
-        		'description' => 'Create New Item'
+        		'name' => 'post-create',
+        		'display_name' => 'Create Post',
+        		'description' => 'Create New Post'
         	],
         	[
-        		'name' => 'item-edit',
-        		'display_name' => 'Edit Item',
-        		'description' => 'Edit Item'
+        		'name' => 'post-edit',
+        		'display_name' => 'Edit Post',
+        		'description' => 'Edit Post'
         	],
         	[
-        		'name' => 'item-delete',
-        		'display_name' => 'Delete Item',
-        		'description' => 'Delete Item'
+        		'name' => 'post-delete',
+        		'display_name' => 'Delete Post',
+        		'description' => 'Delete Post'
         	]
         ];
 
