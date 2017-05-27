@@ -74,7 +74,7 @@
                         <label class="control-label">Date Of Birth <span class="text-danger">*</span></label>
                         <div class="row m-b-15">
                             <div class="col-md-12">
-                                <input type="text" class="form-control flatpickr" id="datepicker-default" placeholder="Select Date" value="" />
+                                <input type="text" name="dob" class="form-control flatpickr" id="datepicker-default" placeholder="Select Date" value="{{ old('dob') }}" />
                             </div>
                         </div>
                         
