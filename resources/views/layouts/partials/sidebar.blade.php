@@ -1,4 +1,3 @@
-begin #sidebar -->
 <div id="sidebar" class="sidebar">
     <!-- begin sidebar scrollbar -->
     <div data-scrollbar="true" data-height="100%">
@@ -137,8 +136,8 @@ begin #sidebar -->
                     <span>Posts</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/posts') }}" target="_blank">All posts</a></li>
-                    <li><a href="{{ url('/posts/new') }}" target="_blank">New post</a></li>
+                    <li><a href="{{ url('/posts') }}">All posts</a></li>
+                    <li><a href="{{ url('/posts/new') }}">New post</a></li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -148,8 +147,8 @@ begin #sidebar -->
                     <span>Tags</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/tags') }}" target="_blank">All tags</a></li>
-                    <li><a href="{{ url('/tags/new') }}" target="_blank">New tag</a></li>
+                    <li><a href="{{ url('/tags') }}">All tags</a></li>
+                    <li><a href="{{ url('/tags/new') }}">New tag</a></li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -159,8 +158,8 @@ begin #sidebar -->
                     <span>Categories</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/categories') }}" target="_blank">All categories</a></li>
-                    <li><a href="{{ url('/categories/new') }}" target="_blank">New category</a></li>
+                    <li><a href="{{ url('/categories') }}">All categories</a></li>
+                    <li><a href="{{ url('/categories/new') }}">New category</a></li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -176,8 +175,8 @@ begin #sidebar -->
                     <span>Roles</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/roles') }}" target="_blank">All roles</a></li>
-                    <li><a href="{{ url('/roles/new') }}" target="_blank">New role</a></li>
+                    <li><a href="{{ url('/roles') }}">All roles</a></li>
+                    <li><a href="{{ url('/roles/new') }}">New role</a></li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -187,8 +186,8 @@ begin #sidebar -->
                     <span>Permissions</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/permissions') }}" target="_blank">All permissions</a></li>
-                    <li><a href="{{ url('/permissions/new') }}" target="_blank">New permission</a></li>
+                    <li><a href="{{ url('/permissions') }}">All permissions</a></li>
+                    <li><a href="{{ url('/permissions/new') }}">New permission</a></li>
                 </ul>
             </li>
             <!-- <li class="has-sub">

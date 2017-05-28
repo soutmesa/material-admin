@@ -19,7 +19,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            User::update(['status_id'=>1]);
+            // User::update(['status_id'=>1]);
             return redirect('/home');
         }
 

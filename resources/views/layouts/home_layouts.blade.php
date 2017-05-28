@@ -65,12 +65,17 @@
     <script src="{{asset('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('assets/js/dashboard.min.js')}}"></script>
     <script src="{{asset('assets/js/apps.min.js')}}"></script>
+    @yield ('scripts')
     <!-- ================== END PAGE LEVEL JS ================== -->
     
     <script>
         $(document).ready(function() {
             App.init();
-            Dashboard.init();
+            console.log(window.location.href);
+            if(window.location.href == "http://localhost:8000/home")
+            {
+                Dashboard.init();
+            }
         });
     </script>
     <script>

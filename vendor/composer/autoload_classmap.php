@@ -23,6 +23,7 @@ return array(
     'CreateTableCategories' => $baseDir . '/database/migrations/2017_05_23_034903_create_table_categories.php',
     'CreateTableCategoryPost' => $baseDir . '/database/migrations/2017_05_26_140159_create_table_category_post.php',
     'CreateTableComments' => $baseDir . '/database/migrations/2017_05_26_132843_create_table_comments.php',
+    'CreateTableMediables' => $baseDir . '/database/migrations/2017_05_28_131555_create_table_mediables.php',
     'CreateTableMedias' => $baseDir . '/database/migrations/2017_05_23_035506_create_table_medias.php',
     'CreateTablePermissionRole' => $baseDir . '/database/migrations/2017_05_26_142303_create_table_permission_role.php',
     'CreateTablePermissions' => $baseDir . '/database/migrations/2017_05_26_142132_create_table_permissions.php',

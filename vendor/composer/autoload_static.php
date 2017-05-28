@@ -343,6 +343,7 @@ class ComposerStaticInit1988e920d988ba859a2d10fbb6153d7e
         'CreateTableCategories' => __DIR__ . '/../..' . '/database/migrations/2017_05_23_034903_create_table_categories.php',
         'CreateTableCategoryPost' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_140159_create_table_category_post.php',
         'CreateTableComments' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_132843_create_table_comments.php',
+        'CreateTableMediables' => __DIR__ . '/../..' . '/database/migrations/2017_05_28_131555_create_table_mediables.php',
         'CreateTableMedias' => __DIR__ . '/../..' . '/database/migrations/2017_05_23_035506_create_table_medias.php',
         'CreateTablePermissionRole' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_142303_create_table_permission_role.php',
         'CreateTablePermissions' => __DIR__ . '/../..' . '/database/migrations/2017_05_26_142132_create_table_permissions.php',

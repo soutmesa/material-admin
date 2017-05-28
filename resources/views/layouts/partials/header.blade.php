@@ -33,7 +33,7 @@
                     <li class="dropdown-header bg-indigo text-white">Notifications (5)</li>
                     <li class="media">
                         <a href="javascript:;">
-                            <div class="media-left"><img src="assets/img/user-1.jpg" class="media-object" alt="" /></div>
+                            <div class="media-left"><img src="{{asset('assets/img/user-1.jpg')}}" class="media-object" alt="" /></div>
                             <div class="media-body">
                                 <h6 class="media-heading">John Smith</h6>
                                 <p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
@@ -43,7 +43,7 @@
                     </li>
                     <li class="media">
                         <a href="javascript:;">
-                            <div class="media-left"><img src="assets/img/user-2.jpg" class="media-object" alt="" /></div>
+                            <div class="media-left"><img src="{{asset('assets/img/user-2.jpg')}}" class="media-object" alt="" /></div>
                             <div class="media-body">
                                 <h6 class="media-heading">Olivia</h6>
                                 <p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
@@ -85,7 +85,7 @@
             </li>
             <li class="dropdown navbar-user">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="assets/img/user.jpg" alt="" /> 
+                    <img src="{{asset('assets/img/user.jpg')}}" alt="" /> 
                     <span class="hidden-xs">Hi, {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
                 </a>
                 <ul class="dropdown-menu animated fadeInLeft">

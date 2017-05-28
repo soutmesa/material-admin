@@ -40,9 +40,9 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::group(['prefix'=>'posts'], function(){
 		Route::get('',['as'=>'posts.index','uses'=>'PostController@index','middleware' => ['permission:post-list|post-create|post-edit|post-delete']]);
-		Route::get('create',['as'=>'posts.create','uses'=>'PostController@create','middleware' => ['permission:post-create']]);
-		Route::post('create',['as'=>'posts.store','uses'=>'PostController@store','middleware' => ['permission:post-create']]);
-		Route::get('{id}',['as'=>'posts.show','uses'=>'PostController@show']);
+		Route::get('new',['as'=>'posts.create','uses'=>'PostController@create','middleware' => ['permission:post-create']]);
+		Route::post('new',['as'=>'posts.store','uses'=>'PostController@store','middleware' => ['permission:post-create']]);
+		// Route::get('{id}',['as'=>'posts.show','uses'=>'PostController@show']);
 		Route::get('{id}/edit',['as'=>'posts.edit','uses'=>'PostController@edit','middleware' => ['permission:post-edit']]);
 		Route::patch('{id}',['as'=>'posts.update','uses'=>'PostController@update','middleware' => ['permission:post-edit']]);
 		Route::delete('{id}',['as'=>'posts.destroy','uses'=>'PostController@destroy','middleware' => ['permission:post-delete']]);
