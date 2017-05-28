@@ -1,4 +1,4 @@
-<!-- begin #sidebar -->
+begin #sidebar -->
 <div id="sidebar" class="sidebar">
     <!-- begin sidebar scrollbar -->
     <div data-scrollbar="true" data-height="100%">
@@ -11,7 +11,7 @@
                     </div>
                     <div class="info">
                         <b class="caret pull-right"></b>
-                        John Smith
+                        {{ Auth::user()->firstname }}  {{ Auth::user()->lastname }}
                         <small>Front end developer</small>
                     </div>
                 </a>
@@ -34,7 +34,7 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="has-sub">
+            <!-- <li class="has-sub">
                 <a href="javascript:;">
                     <span class="badge pull-right">10</span>
                     <i class="material-icons">inbox</i>
@@ -46,8 +46,8 @@
                     <li><a href="email_compose.html">Compose</a></li>
                     <li><a href="email_detail.html">Detail</a></li>
                 </ul>
-            </li>
-            <li class="has-sub">
+            </li> -->
+            <!-- <li class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">toys</i>
@@ -70,8 +70,8 @@
                     <li><a href="ui_social_buttons.html">Social Buttons<i class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
                     <li><a href="ui_tour.html">Intro JS<i class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
                 </ul>
-            </li>
-            <li class="has-sub">
+            </li> -->
+            <!-- <li class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">insert_drive_file</i>
@@ -90,8 +90,8 @@
                     <li><a href="form_summernote.html">Summernote <i class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
                     <li><a href="form_dropzone.html">Dropzone <i class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
                 </ul>
-            </li>
-            <li class="has-sub">
+            </li> -->
+            <!-- <li class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">grid_on</i>
@@ -117,7 +117,7 @@
                         </ul>
                     </li>
                 </ul>
-            </li>
+            </li> -->
             <li class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
@@ -131,6 +131,67 @@
                 </ul>
             </li>
             <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="material-icons">loyalty</i>
+                    <span>Posts</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{ url('/posts') }}" target="_blank">All posts</a></li>
+                    <li><a href="{{ url('/posts/new') }}" target="_blank">New post</a></li>
+                </ul>
+            </li>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="material-icons">label</i>
+                    <span>Tags</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{ url('/tags') }}" target="_blank">All tags</a></li>
+                    <li><a href="{{ url('/tags/new') }}" target="_blank">New tag</a></li>
+                </ul>
+            </li>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="material-icons">loyalty</i>
+                    <span>Categories</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{ url('/categories') }}" target="_blank">All categories</a></li>
+                    <li><a href="{{ url('/categories/new') }}" target="_blank">New category</a></li>
+                </ul>
+            </li>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <i class="material-icons">camera</i>
+                    <span>Gallory</span>
+                </a>
+            </li>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="material-icons">settings</i>
+                    <span>Roles</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{ url('/roles') }}" target="_blank">All roles</a></li>
+                    <li><a href="{{ url('/roles/new') }}" target="_blank">New role</a></li>
+                </ul>
+            </li>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="material-icons">settings</i>
+                    <span>Permissions</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{ url('/permissions') }}" target="_blank">All permissions</a></li>
+                    <li><a href="{{ url('/permissions/new') }}" target="_blank">New permission</a></li>
+                </ul>
+            </li>
+            <!-- <li class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">email</i>
@@ -154,8 +215,8 @@
                     <li><a href="chart-d3.html">d3 Chart</a></li>
                 </ul>
             </li>
-            <li><a href="calendar.html"><i class="material-icons">date_range</i> <span>Calendar</span></a></li>
-            <li class="has-sub">
+            <li><a href="calendar.html"><i class="material-icons">date_range</i> <span>Calendar</span></a></li> -->
+            <!-- <li class="has-sub">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">place</i>
@@ -285,9 +346,9 @@
                     <li><a href="javascript:;">Menu 1.2</a></li>
                     <li><a href="javascript:;">Menu 1.3</a></li>
                 </ul>
-            </li>
+            </li> -->
             <!-- begin sidebar minify button -->
-            <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
+            <!-- <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li> -->
             <!-- end sidebar minify button -->
         </ul>
         <!-- end sidebar nav -->
@@ -295,4 +356,4 @@
     <!-- end sidebar scrollbar -->
 </div>
 <div class="sidebar-bg"></div>
-<!-- end #sidebar -->
+<!-- end #sidebar

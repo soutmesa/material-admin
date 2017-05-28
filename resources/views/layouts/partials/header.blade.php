@@ -86,7 +86,7 @@
             <li class="dropdown navbar-user">
                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="assets/img/user.jpg" alt="" /> 
-                    <span class="hidden-xs">Hi, John Smith</span>
+                    <span class="hidden-xs">Hi, {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</span>
                 </a>
                 <ul class="dropdown-menu animated fadeInLeft">
                     <li class="arrow"></li>

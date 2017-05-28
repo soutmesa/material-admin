@@ -24,7 +24,9 @@ Route::group(['middleware' => ['auth']], function() {
 
 	Route::get('/dashboard', 'HomeController@index');
 
-	Route::resource('users','UserController');
+	Route::group(['prefix' => 'users'], function(){
+		Route::get('/', 'UserController@index');
+	});
 
 	Route::group(['prefix'=>'roles'], function(){
 		Route::get('',['as'=>'roles.index','uses'=>'RoleController@index','middleware' => ['permission:role-list|role-create|role-edit|role-delete']]);

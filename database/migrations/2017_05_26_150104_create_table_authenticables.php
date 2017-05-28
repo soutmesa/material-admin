@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableCreatables extends Migration
+class CreateTableAuthenticables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTableCreatables extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('creatables'))
+        if(!Schema::hasTable('authenticables'))
         {
-            Schema::create('creatables', function (Blueprint $table) {
-                $table->increments('user_id')
+            Schema::create('authenticables', function (Blueprint $table) {
+                $table->integer('user_id')
                     ->unsigned()
                     ->foreign('user_id')
                     ->references('id')
@@ -24,8 +24,8 @@ class CreateTableCreatables extends Migration
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 
-                $table->string('creatable_type');
-                $table->integer('creatable_id')
+                $table->string('authenticable_type');
+                $table->integer('authenticable_id')
                     ->unsigned()
                     ->nullable();
 
@@ -41,6 +41,6 @@ class CreateTableCreatables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('creatables');
+        Schema::dropIfExists('authenticables');
     }
 }

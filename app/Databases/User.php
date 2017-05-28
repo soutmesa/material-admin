@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Databases;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +20,9 @@ class User extends Authenticatable
     // protected $fillable = [
     //     'username', 'email', 'password',
     // ];
+
+    protected $table = 'users';
+
     protected $guarded = ['id', 'password_confirmation'];
     /**
      * The attributes that should be hidden for arrays.
@@ -29,6 +32,42 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function authenticables()
+    {
+        return $this->morphTo()->withTimestamps();
+    }
+
+
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->id);
+    }
+
+    public function authenticated()
+    {
+        return $this->morphToMany('App\Databases\User', 'authenticable')->withTimestamps(); 
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Databases\Role')->withTimestamps();
+    }
+
+    public function setPasswordAttribute($password)
+    {
+        return $this->attributes['password'] = bcrypt($password);
+    }
+    
+    public function setFirstNameAttribute($firstname)
+    {
+        return $this->attributes['firstname'] = strtoupper($firstname);
+    }
+    
+    public function setLastNameAttribute($lastname)
+    {
+        return $this->attributes['lastname'] = ucfirst($lastname);
+    }
 
     public function getAll()
     {

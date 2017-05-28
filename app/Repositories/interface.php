@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-interface Interface {
+interface Interface{
 
     public function getAll();
 

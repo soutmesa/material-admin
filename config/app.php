@@ -164,7 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
-        App\Repositories\RepoServiceProvide::class,
+        // App\Repositories\RepoServiceProvide::class,
 
         /*
          * Package Service Providers...

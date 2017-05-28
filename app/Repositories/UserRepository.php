@@ -10,7 +10,7 @@ class UserRepository implements UserInterface
     public $user;
 
     function __construct(User $user) {
-    $this->user = $user;
+        $this->user = $user;
     }
 
     public function getAll()
