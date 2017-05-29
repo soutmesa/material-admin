@@ -3,8 +3,6 @@
 <!--[if !IE]><!-->
 <html lang="en">
 <!--<![endif]-->
-
-<!-- Mirrored from seantheme.com/color-admin-v2.2/admin/material/login_v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 May 2017 02:01:41 GMT -->
 <head>
     <meta charset="utf-8" />
     <title>Color Admin | @yield ('title')</title>
@@ -98,6 +96,4 @@
     @yield ('scripts')
 
 </body>
-
-<!-- Mirrored from seantheme.com/color-admin-v2.2/admin/material/login_v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 May 2017 02:05:24 GMT -->
 </html>
