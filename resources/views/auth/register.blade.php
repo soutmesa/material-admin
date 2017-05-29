@@ -1,6 +1,11 @@
-@extends ('layouts.app')
+@extends ('layouts.login_app')
 
-@section ('title',  'Login Page')
+@section ('title',  'Registeration')
+
+@section ('stylesheets')
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr@2.6.3/dist/themes/material_blue.css">
+@endsection
 
 @section ('content')
     

@@ -1,6 +1,10 @@
-@extends ('layouts.app')
+@extends ('layouts.login_app')
 
-@section ('title',  'Login Page')
+@section ('title',  'Login')
+
+@section ('stylesheets')
+    
+@endsection
 
 @section ('content')
     

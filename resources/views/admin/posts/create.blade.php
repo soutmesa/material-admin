@@ -1,5 +1,7 @@
 @extends ('layouts.home_layouts')
 
+@section ('title', 'Post - New')
+
 @section ('stylesheets')
 	<link href="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet" />
 @endsection
@@ -39,12 +41,16 @@
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                             </div>
-                            <h4 class="panel-title">WYSIHTML5</h4>
+                            <h4 class="panel-title">Post - New</h4>
                         </div>
                         <div class="panel-body">
-                            <form action="" name="wysihtml5" method="POST">
-								<textarea class="textarea form-control" id="wysihtml5" placeholder="Enter text ..." rows="12"></textarea>
-							</form>
+                            {{ Form::open(['route'=>'posts.store', 'name'=>'wysihtml5']) }}
+                                {{ Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=>'Enter title ...']) }}
+                                <br>
+                                {{ Form::textarea('body', old('body'), ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
+                                <br>
+                                {{ Form::submit('Publish', ['class'=>'btn btn-default'])}}
+							{{ Form::close() }}
                         </div>
                     </div>
                     <!-- end panel -->

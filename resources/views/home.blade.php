@@ -1,5 +1,7 @@
 @extends ('layouts.home_layouts')
 
+@section ('title', 'Dashboard')
+
 @section ('content')
     
     <!-- begin #page-container -->
