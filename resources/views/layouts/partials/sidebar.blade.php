@@ -136,8 +136,8 @@
                     <span>Posts</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/posts') }}">All posts</a></li>
-                    <li><a href="{{ url('/posts/new') }}">New post</a></li>
+                    <li><a href="{{ route('posts.index', 'published') }}">All posts</a></li>
+                    <li><a href="{{ route('posts.create') }}">New post</a></li>
                 </ul>
             </li>
             <li class="has-sub">

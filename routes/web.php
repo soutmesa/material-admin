@@ -39,16 +39,14 @@ Route::group(['middleware' => ['auth']], function() {
 	});
 
 	Route::group(['prefix'=>'posts'], function(){
-		Route::get('',['as'=>'posts.index','uses'=>'PostController@index','middleware' => ['permission:post-list|post-create|post-edit|post-delete']]);
+		Route::get('status-post={trashed?}',['as'=>'posts.index','uses'=>'PostController@index','middleware' => ['permission:post-list|post-create|post-edit|post-delete']]);
 		Route::get('new',['as'=>'posts.create','uses'=>'PostController@create','middleware' => ['permission:post-create']]);
 		Route::post('new',['as'=>'posts.store','uses'=>'PostController@store','middleware' => ['permission:post-create']]);
 		Route::get('{id}/edit',['as'=>'posts.edit','uses'=>'PostController@edit','middleware' => ['permission:post-edit']]);
 		Route::patch('{id}',['as'=>'posts.update','uses'=>'PostController@update','middleware' => ['permission:post-edit']]);
-		Route::delete('{id}',['as'=>'posts.destroy','uses'=>'PostController@destroy','middleware' => ['permission:post-delete']]);
+		Route::get('{id}/delete-{act?}',['as'=>'posts.destroy','uses'=>'PostController@destroy']);
+		Route::get('{id}/restore',['as'=>'posts.restore','uses'=>'PostController@restore']);
 		Route::get('?action={act?}',['as'=>'posts.bulk','uses'=>'PostController@destroy','middleware' => ['permission:post-list|post-create|post-edit|post-delete']]);
-		//Route::get('',['as'=>'posts.index','uses'=>'PostController@index','middleware' => ['permission:post-list|post-create|post-edit|post-delete']]);
-		//Route::get('',['as'=>'posts.index','uses'=>'PostController@index','middleware' => ['permission:post-list|post-create|post-edit|post-delete']]);
-
 	});
 });
 

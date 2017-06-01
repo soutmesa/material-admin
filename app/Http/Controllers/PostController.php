@@ -6,16 +6,24 @@ use Illuminate\Http\Request;
 use App\Databases\Post;
 use App\Databases\Category;
 use App\Databases\Tag;
-use Auth;
 use App\Databases\User;
+use Auth;
 
 class PostController extends Controller
 {
-    public function index($pagin=null)
+    public function index($trashed=null)
     {
-    	$posts = Post::paginate(10);
+        if( isset($trashed) && $trashed == "trashed"){
+            $posts = Post::onlyTrashed()->paginate(10);
+        }else{
+            $posts = Post::paginate(10);
+        }
+
+        $count_trashed = count( Post::onlyTrashed()->get() );
+
+        $count_published = count( Post::get() );
         
-    	return view( 'admin.posts.index', ['posts'=>$posts] );
+    	return view( 'admin.posts.index', ['posts'=>$posts, 'trashed'=>$count_trashed, 'published'=>$count_published] );
     }
 
     public function edit($id)
@@ -42,5 +50,29 @@ class PostController extends Controller
         $post->authenticated()->attach($auth);
 
         return redirect('posts')->withMessage('Post has been created successfully!!!');
+    }
+
+    public function destroy($id,$act=null)
+    { 
+        $post = Post::findOrFail($id);
+
+        if($act == "trash")
+        {
+            $post->delete();
+        }else
+        {
+            $post->forceDelete();
+        }
+
+        return redirect('posts/status-post=all')->withMessage('Post has been deleted !!!');
+    }
+
+    public function restore($id)
+    {
+        $post = Post::onlyTrashed()->where('id', '=', $id)->get()->first();
+            
+        $post->restore();
+
+        return redirect('posts/status-post=all')->withMessage('Post has been restored !!!');
     }
 }

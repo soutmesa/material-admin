@@ -5,6 +5,12 @@
 @section ('stylesheets')
 	<link type="text/css" href="{{ asset('assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css') }}" rel="stylesheet" />
     <link type="text/css" href="{{ asset('assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/sweetalert/css/sweetalert.css') }}">
+    <style type="text/css">
+        .no-sort::after { display: none!important; }
+        .no-sort, .no-action { pointer-events: none!important; cursor: default!important; }
+        .no-action {color: #000;}
+    </style>
 @endsection
 
 @section ('content')
@@ -53,7 +59,11 @@
                         </div>
                         @endif
                         <div class="panel-body">
-                            <p><a href="">All (2)</a> | <a href="">Published (2)</a> | <a href="">Trash (1)</a></p>
+                            <p>
+                                <a class="<?php if(Request::is('*all')) echo 'no-action';?>" href="{{ route('posts.index', 'all') }}">All ({{ $published }})</a>
+                                @if($published >= 1) | <a class="<?php if(Request::is('*published')) echo 'no-action';?>" href="{{ route('posts.index', 'published') }}">Published ({{ $published }})</a>@endif 
+                                @if($trashed >= 1) | <a class="<?php if(Request::is('*trashed')) echo 'no-action';?>" href="{{ route('posts.index', 'trashed') }}">Trash ({{ $trashed }})</a>@endif
+                            </p>
                             {{ Form::open(['route'=>'posts.bulk', 'class'=>'col-md-3', 'style="', 'padding: 0px !important;"']) }}
                                 <div class="form-group col-md-8" style="padding: 0px;">
                                     {{ Form::select('action', ['Bulk Actions', 'Edit', 'Move to Trash'], null,['class'=>'form-control']) }}
@@ -77,35 +87,47 @@
                             <table id="my-table" class="table table-hover table-striped table-bordered nowrap" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>{{ Form::checkbox('checkall', null) }}</th>
                                         <th>Title</th>
                                         <th>Body</th>
                                         <th>Author</th>
                                         <th>Categories</th>
                                         <th>Tags</th>
                                         <th>Published</th>
-                                        <th align="center">Action</th>
+                                        <th class="no-sort" align="center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($posts as $key => $post)
                                     <tr>
-                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ Form::checkbox('checked-post', $post->id) }}</td>
                                         <td>{{ $post->title }}</td>
                                         <td>{!! $post->body !!}</td>
                                         <td>{{ $post->authenticated->first()->username }}</td>
                                         <td>{{ count($post->categories)?$post->categories:'Nan' }}</td>
                                         <td>{{ count($post->tags)?$post->tags:'Nan' }}</td>
                                         <td>{{ $post->created_at }}</td>
-                                        <td align="center"><a class="btn btn-xs btn-icon btn-circle btn-warning" href=""><i class="fa fa-edit"></i></a> | <a href="" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a></td>
+                                        @if(Request::is('*trashed'))
+                                        <td align="center">
+                                            <a class="btn btn-xs btn-icon btn-circle btn-info" href="{{ route('posts.restore', $post->id) }}"><i class="fa fa-repeat"></i></a> | 
+                                            <a href="{{ route('posts.destroy', [$post->id,'force']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
+                                        </td>
+                                        @else
+                                        <td align="center">
+                                            <a class="btn btn-xs btn-icon btn-circle btn-warning" href=""><i class="fa fa-edit"></i></a> | 
+                                            <a href="{{ route('posts.destroy', [$post->id, 'trash']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
+                                        </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
+                        @if(count($posts->links()) > 1)
                         <div class="panel-footer">
                             {{ $posts->links() }}
                         </div>
+                        @endif
                     </div>
                     <!-- end panel -->
                 </div>
@@ -196,12 +218,43 @@
     <script type="text/javascript" src="{{ asset('assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/table-manage-responsive.demo.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/plugins/sweetalert/js/sweetalert.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             TableManageResponsive.init();
         });
     </script>
     <script type="text/javascript">
+        $(document).ready(function(){
+            $('input[name="checkall"]').click(function(event) {   
+                if(this.checked){
+                    $(':checkbox').each(function(){this.checked=true;});
+                }else{
+                    $(':checkbox').each(function(){this.checked=false;});
+                }
+            });
+        });
+
+        $('table tr td .btn-danger').on('click',function(e){
+            e.preventDefault();
+            var mycurrent = $(this);
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                    window.location.href = mycurrent.attr('href');
+                }
+            });
+        });
         $(document).ready(function(){
             $('#my-table').DataTable({
                 "order": [[ 3, "desc" ]],
@@ -210,7 +263,10 @@
                 "language": {
                     searchPlaceholder: "Type the key here ... "
                 },
-                "bInfo" : false
+                "bInfo" : false,
+                "aoColumnDefs": [
+                    { 'bSortable': false, 'aTargets': [ 0 ] }
+                ]
             });
             function disabledAlert()
             {

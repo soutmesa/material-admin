@@ -3,14 +3,20 @@
 namespace App\Databases;
 
 use Illuminate\Database\Eloquent\Model;
-
 use Zizaco\Entrust\EntrustPermission;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Permission extends EntrustPermission
 {
-	protected $table = 'roles';
+    use SoftDeletes;
+
+    use Traits\DateFormat;
+
+	protected $table = 'permissions';
 
     protected $guarded = ['id'];
+
+    protected $dates = ['deleted_at'];
 
     public function roles()
     {
