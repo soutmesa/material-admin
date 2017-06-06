@@ -123,11 +123,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        @if(count($posts->links()) > 1)
                         <div class="panel-footer">
                             {{ $posts->links() }}
                         </div>
-                        @endif
                     </div>
                     <!-- end panel -->
                 </div>

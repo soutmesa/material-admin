@@ -49,7 +49,7 @@ class PostController extends Controller
 
         $post->authenticated()->attach($auth);
 
-        return redirect('posts')->withMessage('Post has been created successfully!!!');
+        return redirect('posts/status-post=all')->withMessage('Post has been created successfully!!!');
     }
 
     public function destroy($id,$act=null)

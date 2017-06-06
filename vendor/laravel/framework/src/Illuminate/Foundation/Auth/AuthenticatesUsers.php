@@ -85,7 +85,11 @@ trait AuthenticatesUsers
      */
     protected function credentials(Request $request)
     {
-        return $request->only($this->username(), 'password');
+        $field = filter_var($request->input($this->username()), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $request->merge([$field => $request->input($this->username())]);
+        // return $request->only($this->username(), 'password');
+        return $request->only($field, 'password');
     }
 
     /**
@@ -138,7 +142,7 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'email';
+        return 'login';
     }
 
     /**

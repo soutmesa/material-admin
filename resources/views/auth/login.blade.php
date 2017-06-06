@@ -29,11 +29,11 @@
             <!-- end brand -->
             <div class="login-content">
                 {{ Form::open(['url'=>'login', 'class'=>'margin-bottom-0']) }}
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} m-b-20">
-                        {{ Form::text('email', old('email'), ['class'=>'form-control input-lg', 'placeholder'=>'Email Address']) }}
-                        @if ($errors->has('email'))
+                    <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }} m-b-20">
+                        {{ Form::text('login', old('login'), ['class'=>'form-control input-lg', 'placeholder'=>'User name or email']) }}
+                        @if ($errors->has('login'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('email') }}</strong>
+                                <strong>{{ $errors->first('login') }}</strong>
                             </span>
                         @endif
                     </div>
