@@ -78,18 +78,18 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Databases\Role')->withTimestamps();
     }
 
-    public function getAll()
-    {
-        return static::all();
-    }
+    // public function getAll()
+    // {
+    //     return static::all();
+    // }
 
-    public function findUser($id)
-    {
-        return static::find($id);
-    }
+    // public function findUser($id)
+    // {
+    //     return static::find($id);
+    // }
 
-    public function deleteUser($id)
-    {
-        return static::find($id)->delete();
-    }
+    // public function deleteUser($id)
+    // {
+    //     return static::find($id)->delete();
+    // }
 }

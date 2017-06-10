@@ -11,6 +11,8 @@ class Role extends EntrustRole
 {
     use SoftDeletes;
 
+    use Traits\DateFormat;
+
 	protected $table = 'roles';
 
     protected $guarded = ['id'];
@@ -20,16 +22,6 @@ class Role extends EntrustRole
     public function permissions()
     {
         return $this->belongsToMany('App\Databases\Permission')->withTimestamps();
-    }
-
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('j F Y');
-    }
-
-    public function getUpdatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('j F Y');
     }
 
     public function authenticated()

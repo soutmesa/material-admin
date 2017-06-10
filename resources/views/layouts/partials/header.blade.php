@@ -14,7 +14,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="index-2.html" class="navbar-brand">
+            <a href="{{ url('/home') }}" class="navbar-brand">
                 Color Admin Material
             </a>
         </div>

@@ -27,8 +27,8 @@
         <!-- begin sidebar nav -->
         <ul class="nav">
             <li class="nav-header">Applications</li>
-            <li class="has-sub active">
-                <a href="javascript:;">
+            <li class="has-sub {{ setActive('home') }}">
+                <a href="{{ url('home') }}">
                     <i class="material-icons">home</i>
                     <span>Dashboard</span>
                 </a>
@@ -129,15 +129,15 @@
                     <li><a href="{{ url('/') }}" target="_blank">E-Commerce</a></li>
                 </ul>
             </li>
-            <li class="has-sub">
+            <li class="has-sub {{ setActive('*post*') }}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">loyalty</i>
                     <span>Posts</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ route('posts.index', 'published') }}">All posts</a></li>
-                    <li><a href="{{ route('posts.create') }}">New post</a></li>
+                    <li class="{{ setActive('posts/status-post*') }}"><a href="{{ route('posts.index', 'published') }}">All posts</a></li>
+                    <li class="{{ setActive('posts/new') }}"><a href="{{ route('posts.create') }}">New post</a></li>
                 </ul>
             </li>
             <li class="has-sub">

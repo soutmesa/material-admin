@@ -66,7 +66,7 @@
                             </p>
                             {{ Form::open(['route'=>'posts.bulk', 'class'=>'col-md-3', 'style="', 'padding: 0px !important;"']) }}
                                 <div class="form-group col-md-8" style="padding: 0px;">
-                                    {{ Form::select('action', ['Bulk Actions', 'Edit', 'Move to Trash'], null,['class'=>'form-control']) }}
+                                    {{ Form::select('action', ['Bulk Actions', 'Delete', 'Move to Trash'], null,['class'=>'form-control']) }}
                                 </div>
                                 <div class="form-group col-md-4" style="padding: 0px;">
                                     {{ Form::submit('Apply', ['class'=>'btn btn-default']) }}
@@ -102,7 +102,7 @@
                                     <tr>
                                         <td>{{ Form::checkbox('checked-post', $post->id) }}</td>
                                         <td>{{ $post->title }}</td>
-                                        <td>{!! $post->body !!}</td>
+                                        <td>{!! str_limit($post->body, 40) !!}</td>
                                         <td>{{ $post->authenticated->first()->username }}</td>
                                         <td>{{ count($post->categories)?$post->categories:'Nan' }}</td>
                                         <td>{{ count($post->tags)?$post->tags:'Nan' }}</td>
@@ -114,7 +114,7 @@
                                         </td>
                                         @else
                                         <td align="center">
-                                            <a class="btn btn-xs btn-icon btn-circle btn-warning" href=""><i class="fa fa-edit"></i></a> | 
+                                            <a class="btn btn-xs btn-icon btn-circle btn-warning" href="{{ route('posts.edit', $post->id) }}"><i class="fa fa-edit"></i></a> | 
                                             <a href="{{ route('posts.destroy', [$post->id, 'trash']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
                                         </td>
                                         @endif

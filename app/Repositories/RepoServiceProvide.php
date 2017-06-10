@@ -23,9 +23,19 @@ class RepoServiceProvide extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Repositories\Interface', [
-        	'App\Repositories\UserRepository',
-        	'App\Repositories\RoleRepository'
-        ]);
+        $models = [
+            'User',
+            'Role',
+            'Category',
+            'Comment',
+            'Tag',
+            'Person',
+            'Permission',
+            'Post'
+        ];
+
+        foreach ($models as $idx => $model) {
+            $this->app->bind("App\Repositories\\{$model}\\{$model}Interface", "App\Repositories\\{$model}\\{$model}Repository");
+        }
     }
 }

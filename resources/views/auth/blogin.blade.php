@@ -8,76 +8,70 @@
 
 @section ('content')
     
+    <div class="login-cover">
+        <div class="login-cover-image"><img src="assets/img/login-bg/bg-1.jpg" data-id="login-cover-image" alt="" /></div>
+        <div class="login-cover-bg"></div>
+    </div>
     <!-- begin #page-container -->
     <div id="page-container" class="fade">
         <!-- begin login -->
-        <div class="login login-with-news-feed">
-            <!-- begin news-feed -->
-            <div class="news-feed">
-                <div class="news-image">
-                    <img src="assets/img/login-bg/bg-7.jpg" data-id="login-cover-image" alt="" />
+        <div class="login login-v2" data-pageload-addclass="animated fadeIn">
+            <!-- begin brand -->
+            <div class="login-header">
+                <div class="brand">
+                    <span class="logo"></span> Color Admin
+                    <small>responsive admin template</small>
                 </div>
-                <div class="news-caption">
-                    <h4 class="caption-title"><i class="material-icons text-cyan pull-left m-r-5">apps</i> Announcing the Color Admin app</h4>
-                    <p>
-                        Download the Color Admin app for iPhone®, iPad®, and Android™. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </p>
+                <div class="icon">
+                    <i class="material-icons">lock</i>
                 </div>
             </div>
-            <!-- end news-feed -->
-            <!-- begin right-content -->
-            <div class="right-content">
-                <!-- begin login-header -->
-                <div class="login-header">
-                    <div class="brand">
-                        <span class="logo"></span> Color Admin
-                        <small>responsive bootstrap admin template</small>
+            <!-- end brand -->
+            <div class="login-content">
+                {{ Form::open(['url'=>'login', 'class'=>'margin-bottom-0']) }}
+                    <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }} m-b-20">
+                        {{ Form::text('login', old('login'), ['class'=>'form-control input-lg', 'placeholder'=>'User name or email']) }}
+                        @if ($errors->has('login'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('login') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    <div class="icon">
-                        <i class="material-icons">lock</i>
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} m-b-20">
+                        {{ Form::password('password', ['class'=>'form-control input-lg', 'placeholder'=>'Password']) }}
+                        @if ($errors->has('password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                </div>
-                <!-- end login-header -->
-                <!-- begin login-content -->
-                <div class="login-content">
-                    {{ Form::open(['url'=>'login', 'class'=>'margin-bottom-0']) }}
-                        <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }} m-b-20">
-                            {{ Form::text('login', old('login'), ['class'=>'form-control input-lg', 'placeholder'=>'User name or email']) }}
-                            @if ($errors->has('login'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('login') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} m-b-20">
-                            {{ Form::password('password', ['class'=>'form-control input-lg', 'placeholder'=>'Password']) }}
-                            @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="checkbox m-b-20">
-                            <label>
-                                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : ''}}> Remember Me
-                            </label>
-                        </div>
-                        <div class="login-buttons">
-                            {{ Form::submit('Sign me in', ['class'=>'btn btn-info btn-block btn-lg']) }}
-                        </div>
-                        <div class="m-t-20">
-                            Not a member yet? Click <a href="{{ url('/register') }}">here</a> to register.
-                        </div>
-                    {{ Form::close() }}
-                </div>
-                <!-- end login-content -->
+                    <div class="checkbox m-b-20">
+                        <label>
+                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : ''}}> Remember Me
+                        </label>
+                    </div>
+                    <div class="login-buttons">
+                        {{ Form::submit('Sign me in', ['class'=>'btn btn-info btn-block btn-lg']) }}
+                    </div>
+                    <div class="m-t-20">
+                        Not a member yet? Click <a href="{{ url('/register') }}">here</a> to register.
+                    </div>
+                {{ Form::close() }}
             </div>
-            <!-- end right-container -->
         </div>
         <!-- end login -->
         
+        <ul class="login-bg-list">
+            <li class="active"><a href="#" data-click="change-bg"><img src="assets/img/login-bg/bg-1.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="assets/img/login-bg/bg-2.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="assets/img/login-bg/bg-3.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="assets/img/login-bg/bg-4.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="assets/img/login-bg/bg-5.jpg" alt="" /></a></li>
+            <li><a href="#" data-click="change-bg"><img src="assets/img/login-bg/bg-6.jpg" alt="" /></a></li>
+        </ul>
+        
         <!-- begin theme-panel -->
-        <div class="theme-panel">
+        <!-- <div class="theme-panel">
             <a href="javascript:;" data-click="theme-panel-expand" class="theme-collapse-btn"><i class="fa fa-cog"></i></a>
             <div class="theme-panel-content">
                 <h5 class="m-t-0">Color Theme</h5>
@@ -141,9 +135,29 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- end theme-panel -->
     </div>
     <!-- end page container -->
-    
+
+@endsection
+
+@section ('scripts')
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            var getleng = $('.login-bg-list li').length;
+            var x =1;
+            var startslt = ".login-bg-list li:nth-child(";
+            var endslt = ") > a";
+            function displayNext() {
+                x = (x === getleng) ? 1 : x + 1;
+                $(startslt + x + endslt).click();
+            }
+
+            setInterval(displayNext, 10000);
+        });
+    </script>
+
 @endsection

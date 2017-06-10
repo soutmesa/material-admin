@@ -1,80 +1,82 @@
-@extends ('layouts.login_app')
+@extends ('layouts.home_layouts')
 
-@section ('title',  'Login')
+@section ('title', 'Post - New')
 
 @section ('stylesheets')
-    
+	<link href="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet" />
 @endsection
 
 @section ('content')
-    
-    <!-- begin #page-container -->
-    <div id="page-container" class="fade">
-        <!-- begin login -->
-        <div class="login login-with-news-feed">
-            <!-- begin news-feed -->
-            <div class="news-feed">
-                <div class="news-image">
-                    <img src="assets/img/login-bg/bg-7.jpg" data-id="login-cover-image" alt="" />
+	
+	<!-- begin #page-container -->
+    <div id="page-container" class="fade page-sidebar-fixed page-header-fixed page-with-wide-sidebar">
+
+        @include ('layouts.partials.header')
+        
+        @include ('layouts.partials.sidebar')
+        
+        <!-- begin #content -->
+        <div id="content" class="content">
+            <!-- begin breadcrumb -->
+            <ol class="breadcrumb pull-right">
+                <li><a href="javascript:;">Home</a></li>
+                <li class="active">Dashboard</li>
+            </ol>
+            <!-- end breadcrumb -->
+
+            <!-- begin page-header -->
+            <h1 class="page-header">Dashboard <small>header small text goes here...</small></h1>
+            <!-- end page-header -->
+
+            <!-- begin row -->
+			<div class="row">
+                <!-- begin col-8 -->
+                <div class="col-md-8">
+			        <!-- begin panel -->
+                    <div class="panel panel-inverse" data-sortable-id="form-wysiwyg-2">
+                        <div class="panel-heading">
+                            <div class="panel-heading-btn">
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                            <h4 class="panel-title">Post - New</h4>
+                        </div>
+                        <div class="panel-body">
+                            {{ Form::open(['route'=>['posts.update', $post->id], 'name'=>'wysihtml5']) }}
+                                {{ Form::text('title', $post->title, ['class'=>'form-control', 'placeholder'=>'Enter title ...']) }}
+                                <br>
+                                {{ Form::textarea('body', $post->body, ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
+                                <br>
+                                {{ Form::submit('Update', ['class'=>'btn btn-default'])}}
+							{{ Form::close() }}
+                        </div>
+                    </div>
+                    <!-- end panel -->
                 </div>
-                <div class="news-caption">
-                    <h4 class="caption-title"><i class="material-icons text-cyan pull-left m-r-5">apps</i> Announcing the Color Admin app</h4>
-                    <p>
-                        Download the Color Admin app for iPhone®, iPad®, and Android™. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </p>
+                <!-- end col-6 -->
+
+                <div class="col-md-4">
+                    <div class="panel panel-inverse">
+                        <div class="panel-heading">
+                            <div class="panel-heading-btn">
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                            <h4 class="panel-title">WYSIHTML5</h4>
+                        </div>
+                        <div class="panel-body">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- end news-feed -->
-            <!-- begin right-content -->
-            <div class="right-content">
-                <!-- begin login-header -->
-                <div class="login-header">
-                    <div class="brand">
-                        <span class="logo"></span> Color Admin
-                        <small>responsive bootstrap admin template</small>
-                    </div>
-                    <div class="icon">
-                        <i class="material-icons">lock</i>
-                    </div>
-                </div>
-                <!-- end login-header -->
-                <!-- begin login-content -->
-                <div class="login-content">
-                    {{ Form::open(['url'=>'login', 'class'=>'margin-bottom-0']) }}
-                        <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }} m-b-20">
-                            {{ Form::text('login', old('login'), ['class'=>'form-control input-lg', 'placeholder'=>'User name or email']) }}
-                            @if ($errors->has('login'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('login') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} m-b-20">
-                            {{ Form::password('password', ['class'=>'form-control input-lg', 'placeholder'=>'Password']) }}
-                            @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="checkbox m-b-20">
-                            <label>
-                                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : ''}}> Remember Me
-                            </label>
-                        </div>
-                        <div class="login-buttons">
-                            {{ Form::submit('Sign me in', ['class'=>'btn btn-info btn-block btn-lg']) }}
-                        </div>
-                        <div class="m-t-20">
-                            Not a member yet? Click <a href="{{ url('/register') }}">here</a> to register.
-                        </div>
-                    {{ Form::close() }}
-                </div>
-                <!-- end login-content -->
-            </div>
-            <!-- end right-container -->
+            <!-- end row -->
         </div>
-        <!-- end login -->
+        <!-- end #content -->
         
         <!-- begin theme-panel -->
         <div class="theme-panel">
@@ -143,7 +145,21 @@
             </div>
         </div>
         <!-- end theme-panel -->
+        
+        <!-- begin scroll to top btn -->
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+        <!-- end scroll to top btn -->
     </div>
     <!-- end page container -->
-    
+
+@endsection
+
+@section ('scripts')
+	<script type="text/javascript" src="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.all.min.js')}}"></script>
+	<script type="text/javascript" src="{{asset('assets/js/form-wysiwyg.demo.min.js')}}"></script>
+	<script type="text/javascript" type="text/javascript">
+		$(document).ready(function() {
+			FormWysihtml5.init();
+		});
+	</script>	
 @endsection
