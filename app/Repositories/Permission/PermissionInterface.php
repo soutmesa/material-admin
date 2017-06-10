@@ -4,14 +4,15 @@ namespace App\Repositories\Permission;
 
 interface PermissionInterface
 {
+    public function getAll($opt);
 
-    public function getAll();
+    public function getById($id, $opt);
 
-    public function getById($id);
+    public function create($datas);
 
-    public function create(array $datas);
+    public function update($id, $datas);
 
-    public function update($id, array $datas);
+    public function delete($id, $opt);
 
-    public function delete($id);
+    public function restore($id);
 }

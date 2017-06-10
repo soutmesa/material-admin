@@ -38,6 +38,17 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::delete('{id}',['as'=>'roles.destroy','uses'=>'RoleController@destroy','middleware' => ['permission:role-delete']]);
 	});
 
+	Route::group(['prefix'=>'permissions'], function(){
+		Route::get('status-permi={trashed?}',['as'=>'permissions.index','uses'=>'PermissionController@index','middleware' => ['permission:permi-list|permi-create|permi-edit|permi-delete']]);
+		Route::get('create',['as'=>'permissions.create','uses'=>'PermissionController@create','middleware' => ['permission:permi-create']]);
+		Route::post('create',['as'=>'permissions.store','uses'=>'PermissionController@store','middleware' => ['permission:permi-create']]);
+		Route::get('{id}',['as'=>'permissions.show','uses'=>'PermissionController@show']);
+		Route::get('{id}/edit',['as'=>'permissions.edit','uses'=>'PermissionController@edit','middleware' => ['permission:permi-edit']]);
+		Route::post('{id}',['as'=>'permissions.update','uses'=>'PermissionController@update','middleware' => ['permission:permi-edit']]);
+		Route::delete('{id}',['as'=>'permissions.destroy','uses'=>'PermissionController@destroy','middleware' => ['permission:permi-delete']]);
+		Route::get('?action={act?}',['as'=>'permissions.bulk','uses'=>'PermissionController@destroy','middleware' => ['permission:permi-list|permi-create|permi-edit|permi-delete']]);
+	});
+
 	Route::group(['prefix'=>'posts'], function(){
 		Route::get('status-post={trashed?}',['as'=>'posts.index','uses'=>'PostController@index','middleware' => ['permission:post-list|post-create|post-edit|post-delete']]);
 		Route::get('new',['as'=>'posts.create','uses'=>'PostController@create','middleware' => ['permission:post-create']]);

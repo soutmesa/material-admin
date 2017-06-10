@@ -25,6 +25,6 @@ class Permission extends EntrustPermission
 
     public function authenticated()
     {
-        return $this->morphToMany('App\User', 'authenticable')->withTimestamps(); 
+        return $this->morphToMany('App\Databases\User', 'authenticable')->withTimestamps(); 
     }
 }

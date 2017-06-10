@@ -179,15 +179,15 @@
                     <li><a href="{{ url('/roles/new') }}">New role</a></li>
                 </ul>
             </li>
-            <li class="has-sub">
+            <li class="has-sub {{ setActive('*permissions*') }}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">settings</i>
                     <span>Permissions</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/permissions') }}">All permissions</a></li>
-                    <li><a href="{{ url('/permissions/new') }}">New permission</a></li>
+                    <li class="{{ setActive('permissions/status-perm*') }}"><a href="{{ route('permissions.index', 'all') }}">All permissions</a></li>
+                    <li class="{{ setActive('permissions/create') }}"><a href="{{ url('permissions/create') }}">New permission</a></li>
                 </ul>
             </li>
             <!-- <li class="has-sub">
