@@ -13,31 +13,54 @@ class RoleRepository implements RoleInterface
         $this->role = $role;
     }
 
-    public function getAll()
+    public function getAll($opt)
     {
-        return $this->role->get();
+        if( isset($opt) && $opt == "trashed"){
+            $roles = $this->role->onlyTrashed()->paginate(10);
+        }else if(isset($opt) && $opt == ""){
+            $roles = $this->role->get();
+        }else{
+            $roles = $this->role->paginate(10);
+        }
+
+        return $roles;
     }
 
-    public function getById($id)
+    public function getById($id, $opt)
     {
-        return $this->role->findById($id);
+        if(isset($opt) && $opt == "force"){
+            return $this->role->onlyTrashed()->where('id', '=', $id)->get()->first();
+        }
+
+        return $this->role->findOrFail($id);
     }
 
-    public function create(array $datas)
+    public function create($request)
     {
-        return $this->role->create($datas);
-    }
-
-    public function update($id, array $datas)
-    {
-        $role = $this->role->findOrFail(id);
-        $role->role->update($datas);
+        $datas = $request->all();
+        $role = $this->role->create($datas);
+        if($request->has('permissions'))
+        {
+            $role->permissions()->attach($datas["permissions"]);
+        }
         return $role;
     }
 
-    public function delete($id)
+    public function update($id, $request)
     {
-        $this->getById($id)->delete();
+        $datas = $request->all();
+        $this->role = $this->getById($id, "");
+        $this->role->update($datas);
+        if($request->has('permissions'))
+        {
+            $this->role->permissions()->sync($datas['permissions']);
+        }
+        return $this->role;
+    }
+
+    public function delete($id, $opt)
+    {
+        $this->getById($id, $opt)->delete();
         return true;
     }
 }

@@ -20,7 +20,7 @@ class Permission extends EntrustPermission
 
     public function roles()
     {
-        return $this->belongsToMany('App\Databases\Role')->withTimestamps();
+        return $this->belongsToMany('App\Databases\Role', 'permission_role', 'permission_id', 'role_id')->withTimestamps();
     }
 
     public function authenticated()

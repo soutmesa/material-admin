@@ -147,8 +147,8 @@
                     <span>Tags</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/tags') }}">All tags</a></li>
-                    <li><a href="{{ url('/tags/new') }}">New tag</a></li>
+                    <li><a href="{{ route('tags.index','published') }}">All tags</a></li>
+                    <li><a href="{{ route('tags.create') }}">New tag</a></li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -158,8 +158,8 @@
                     <span>Categories</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/categories') }}">All categories</a></li>
-                    <li><a href="{{ url('/categories/new') }}">New category</a></li>
+                    <li><a href="{{ route('categories.index', 'published') }}">All categories</a></li>
+                    <li><a href="{{ route('categories.create') }}">New category</a></li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -175,8 +175,8 @@
                     <span>Roles</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ url('/roles') }}">All roles</a></li>
-                    <li><a href="{{ url('/roles/new') }}">New role</a></li>
+                    <li><a href="{{ route('roles.index', 'published') }}">All roles</a></li>
+                    <li><a href="{{ route('roles.create') }}">New role</a></li>
                 </ul>
             </li>
             <li class="has-sub {{ setActive('*permissions*') }}">
