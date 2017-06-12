@@ -1,10 +1,9 @@
 @extends ('layouts.home_layouts')
 
-@section ('title', 'Post - New')
+@section ('title', 'Permission - New')
 
 @section ('stylesheets')
 	<link href="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet" />
-    <link href="{{asset('assets/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" />
 @endsection
 
 @section ('content')
@@ -31,8 +30,6 @@
 
             <!-- begin row -->
 			<div class="row">
-                {{ Form::open(['route'=>['posts.update', $post->id], 'name'=>'wysihtml5']) }}
-                {{ method_field('PATCH') }}
                 <!-- begin col-8 -->
                 <div class="col-md-8">
 			        <!-- begin panel -->
@@ -47,9 +44,14 @@
                             <h4 class="panel-title">Post - New</h4>
                         </div>
                         <div class="panel-body">
-                            {{ Form::text('title', $post->title, ['class'=>'form-control', 'placeholder'=>'Enter title ...']) }}
-                            <br>
-                            {{ Form::textarea('body', $post->body, ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
+                            {{ Form::open(['route'=>['categories.update', $category->id]]) }}
+                                {{ method_field('PATCH') }}
+                                {{ Form::text('name', $category->name, ['class'=>'form-control', 'placeholder'=>'Enter name ...']) }}
+                                <br>
+                                {{ Form::textarea('description', $category->description, ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
+                                <br>
+                                {{ Form::submit('Publish', ['class'=>'btn btn-default'])}}
+							{{ Form::close() }}
                         </div>
                     </div>
                     <!-- end panel -->
@@ -68,25 +70,10 @@
                             <h4 class="panel-title">WYSIHTML5</h4>
                         </div>
                         <div class="panel-body">
-                            <select class="multiple-select2 category form-control"  name="categories[]" multiple="multiple">
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                            </select>
-                            <br>
-                            <br>
-                            <select class="multiple-select2 tag form-control"  name="tags[]" multiple="multiple">
-                            @foreach($tags as $tag)
-                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                            @endforeach
-                            </select>
-                            <br>
-                            <br>
-                            {{ Form::submit('Update', ['class'=>'btn btn-primary'])}}
+                            
                         </div>
                     </div>
                 </div>
-                {{ Form::close() }}
             </div>
             <!-- end row -->
         </div>
@@ -171,17 +158,9 @@
 @section ('scripts')
 	<script type="text/javascript" src="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.all.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('assets/js/form-wysiwyg.demo.min.js')}}"></script>
-    <script src="{{asset('assets/plugins/select2/dist/js/select2.min.js')}}"></script>
 	<script type="text/javascript" type="text/javascript">
 		$(document).ready(function() {
 			FormWysihtml5.init();
-            $('.multiple-select2.category').select2({
-                placeholder: " Select Categories"
-            }).val({{$post->categories()->getRelatedIds()}}).trigger('change');
-
-            $('.multiple-select2.tag').select2({
-                placeholder: " Select Tags"
-            }).val({{$post->tags()->getRelatedIds()}}).trigger('change');
 		});
 	</script>	
 @endsection

@@ -19,7 +19,7 @@ class Tag extends Model
 
     public function posts()
     {
-        return $this->belongsToMany('App\Databases\Post')->withTimestamps();
+        return $this->belongsToMany('App\Databases\Post', 'post_tag', 'tag_id', 'post_id')->withTimestamps();
     }
 
     public function authenticated()

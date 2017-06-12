@@ -4,6 +4,7 @@ namespace App\Repositories\Category;
 
 use App\Repositories\Category\CategoryInterface;
 use App\Databases\Category;
+use Auth;
 
 class CategoryRepository implements CategoryInterface
 {
@@ -13,31 +14,54 @@ class CategoryRepository implements CategoryInterface
         $this->category = $category;
     }
 
-    public function getAll()
+    public function getAll($opt)
     {
-        return $this->category->get();
+        if( isset($opt) && $opt == "trashed"){
+            $categories = $this->category->onlyTrashed()->paginate(10);
+        }else if(isset($opt) && $opt == ""){
+            $categories = $this->category->get();
+        }else{
+            $categories = $this->category->paginate(10);
+        }
+        return $categories;
     }
 
-    public function getById($id)
+    public function getById($id, $opt)
     {
-        return $this->category->findById($id);
+        if(isset($opt) && $opt == "force"){
+            return$this->category->onlyTrashed()->where('id', '=', $id)->get()->first();
+        }
+        return $this->category->findOrFail($id);
     }
 
-    public function create(array $datas)
+    public function create($datas)
     {
-        return $this->category->create($datas);
+        $this->category = $this->category->create($datas->all());
+        $this->category->authenticated()->attach(Auth::id());
+        return $this->category;
     }
 
-    public function update($id, array $datas)
+    public function update($id, $datas)
     {
-        $category = $this->category->findOrFail(id);
-        $category->category->update($datas);
-        return $category;
+        $this->getById($id, '')->update($datas->all());
+        return $this->category;
     }
 
-    public function delete($id)
+    public function delete($id, $opt)
     {
-        $this->getById($id)->delete();
+        $category = $this->getById($id, $opt);
+        if($opt == "trash"){
+            $category->delete();
+        }else{
+            $category->forceDelete();
+            $category->authenticated()->detach(Auth::id());
+        }
         return true;
+    }
+
+    public function restore($id)
+    {
+        $category = $this->getById($id, 'force');
+        return $category->restore();
     }
 }

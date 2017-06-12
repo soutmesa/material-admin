@@ -5,13 +5,13 @@ namespace App\Repositories\Tag;
 interface TagInterface
 {
 
-    public function getAll();
+    public function getAll($opt);
 
-    public function getById($id);
+    public function getById($id, $opt);
 
-    public function create(array $datas);
+    public function create($datas);
 
-    public function update($id, array $datas);
+    public function update($id, $datas);
 
-    public function delete($id);
+    public function delete($id, $opt);
 }

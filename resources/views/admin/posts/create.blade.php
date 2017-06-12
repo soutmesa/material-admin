@@ -30,6 +30,7 @@
 
             <!-- begin row -->
 			<div class="row">
+                {{ Form::open(['route'=>'posts.store', 'name'=>'wysihtml5']) }}
                 <!-- begin col-8 -->
                 <div class="col-md-8">
 			        <!-- begin panel -->
@@ -44,13 +45,11 @@
                             <h4 class="panel-title">Post - New</h4>
                         </div>
                         <div class="panel-body">
-                            {{ Form::open(['route'=>'posts.store', 'name'=>'wysihtml5']) }}
-                                {{ Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=>'Enter title ...']) }}
-                                <br>
-                                {{ Form::textarea('body', old('body'), ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
-                                <br>
-                                {{ Form::submit('Publish', ['class'=>'btn btn-default'])}}
-							{{ Form::close() }}
+                            {{ Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=>'Enter title ...']) }}
+                            <br>
+                            {{ Form::textarea('body', old('body'), ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
+                            <br>
+                            {{ Form::submit('Publish', ['class'=>'btn btn-default'])}}
                         </div>
                     </div>
                     <!-- end panel -->
@@ -73,6 +72,7 @@
                         </div>
                     </div>
                 </div>
+                {{ Form::close() }}
             </div>
             <!-- end row -->
         </div>

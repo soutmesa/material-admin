@@ -22,15 +22,15 @@ class PostController extends Controller
         $posts = $this->post->getAll($trashed);
         $count_trashed = count($this->post->getAll("trashed"));
         $count_published = count($this->post->getAll(""));
-
     	return view('admin.posts.index', ['posts'=>$posts, 'trashed'=>$count_trashed, 'published'=>$count_published]);
     }
 
     public function edit($id)
     {
     	$post = $this->post->getById($id, "");
-
-    	return view('admin.posts.edit', compact('post'));
+        $categories = Category::get();
+        $tags = Tag::get();
+    	return view('admin.posts.edit', compact('post','categories','tags'));
     }
 
     public function create()

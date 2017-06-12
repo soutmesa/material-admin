@@ -6,12 +6,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
-    // use SoftDeletes;
+    use SoftDeletes;
 
     use EntrustUserTrait;
 
@@ -28,7 +29,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    protected $guarded = ['id', 'password_confirmation'];
+    protected $guarded = ['id', 'password_confirmation', 'roles'];
 
     protected $dates = ['deleted_at'];
     /**
@@ -54,6 +55,11 @@ class User extends Authenticatable
     public function setLastNameAttribute($lastname)
     {
         return $this->attributes['lastname'] = ucfirst($lastname);
+    }
+
+    public function getDOBAttribute($dob)
+    {
+        return Carbon::parse($dob)->format('j F Y');
     }
 
     // Define relationships method

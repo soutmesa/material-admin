@@ -4,40 +4,64 @@ namespace App\Repositories\Tag;
 
 use App\Repositories\Tag\TagInterface;
 use App\Databases\Tag;
+use Auth;
 
 class TagRepository implements TagInterface
 {
-    public $user;
+    public $tag;
 
-    function __construct(Tag $user) {
+    function __construct(Tag $tag) {
         $this->tag = $tag;
     }
 
-    public function getAll()
+    public function getAll($opt)
     {
-        return $this->tag->get();
+        if( isset($opt) && $opt == "trashed"){
+            $tags = $this->tag->onlyTrashed()->paginate(10);
+        }else if(isset($opt) && $opt == ""){
+            $tags = $this->tag->get();
+        }else{
+            $tags = $this->tag->paginate(10);
+        }
+        return $tags;
     }
 
-    public function getById($id)
+    public function getById($id, $opt)
     {
-        return $this->tag->findById($id);
+        if(isset($opt) && $opt == "force"){
+            return$this->tag->onlyTrashed()->where('id', '=', $id)->get()->first();
+        }
+        return $this->tag->findOrFail($id);
     }
 
-    public function create(array $datas)
+    public function create($datas)
     {
-        return $this->tag->create($datas);
+        $this->tag = $this->tag->create($datas->all());
+        $this->tag->authenticated()->attach(Auth::id());
+        return $this->tag;
     }
 
-    public function update($id, array $datas)
+    public function update($id, $datas)
     {
-        $tag = $this->tag->findOrFail(id);
-        $tag->tag->update($datas);
-        return $tag;
+        $this->getById($id, '')->update($datas->all());
+        return $this->tag;
     }
 
-    public function delete($id)
+    public function delete($id, $opt)
     {
-        $this->getById($id)->delete();
+        $tag = $this->getById($id, $opt);
+        if($opt == "trash"){
+            $tag->delete();
+        }else{
+            $tag->forceDelete();
+            $tag->authenticated()->detach(Auth::id());
+        }
         return true;
+    }
+
+    public function restore($id)
+    {
+        $tag = $this->getById($id, 'force');
+        return $tag->restore();
     }
 }

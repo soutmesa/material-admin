@@ -4,6 +4,7 @@ namespace App\Repositories\Role;
 
 use App\Repositories\Role\RoleInterface;
 use App\Databases\Role;
+use Auth;
 
 class RoleRepository implements RoleInterface
 {
@@ -22,7 +23,6 @@ class RoleRepository implements RoleInterface
         }else{
             $roles = $this->role->paginate(10);
         }
-
         return $roles;
     }
 
@@ -31,7 +31,6 @@ class RoleRepository implements RoleInterface
         if(isset($opt) && $opt == "force"){
             return $this->role->onlyTrashed()->where('id', '=', $id)->get()->first();
         }
-
         return $this->role->findOrFail($id);
     }
 
@@ -39,6 +38,7 @@ class RoleRepository implements RoleInterface
     {
         $datas = $request->all();
         $role = $this->role->create($datas);
+        $role->authenticated()->attach(Auth::id());
         if($request->has('permissions'))
         {
             $role->permissions()->attach($datas["permissions"]);

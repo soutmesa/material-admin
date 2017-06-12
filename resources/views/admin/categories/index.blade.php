@@ -1,6 +1,6 @@
 @extends ('layouts.home_layouts')
 
-@section ('title', 'Post - Home')
+@section ('title', 'Categories - Home')
 
 @section ('stylesheets')
 	<link type="text/css" href="{{ asset('assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css') }}" rel="stylesheet" />
@@ -48,7 +48,7 @@
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                             </div>
-                            <span class="panel-title">All Posts</span>
+                            <span class="panel-title">All Categories</span>
                         </div>
                         @if(Session::get('message'))
                         <div class="alert alert-success fade in">
@@ -60,11 +60,11 @@
                         @endif
                         <div class="panel-body">
                             <p>
-                                <a class="<?php if(Request::is('*all')) echo 'no-action';?>" href="{{ route('posts.index', 'all') }}">All ({{ $published }})</a>
-                                @if($published >= 1) | <a class="<?php if(Request::is('*published')) echo 'no-action';?>" href="{{ route('posts.index', 'published') }}">Published ({{ $published }})</a>@endif 
-                                @if($trashed >= 1) | <a class="<?php if(Request::is('*trashed')) echo 'no-action';?>" href="{{ route('posts.index', 'trashed') }}">Trash ({{ $trashed }})</a>@endif
+                                <a class="<?php if(Request::is('*all')) echo 'no-action';?>" href="{{ route('categories.index', 'all') }}">All ({{ $published }})</a>
+                                @if($published >= 1) | <a class="<?php if(Request::is('*published')) echo 'no-action';?>" href="{{ route('categories.index', 'published') }}">Published ({{ $published }})</a>@endif 
+                                @if($trashed >= 1) | <a class="<?php if(Request::is('*trashed')) echo 'no-action';?>" href="{{ route('categories.index', 'trashed') }}">Trash ({{ $trashed }})</a>@endif
                             </p>
-                            {{ Form::open(['route'=>'posts.bulk', 'class'=>'col-md-3', 'style="', 'padding: 0px !important;"']) }}
+                            {{ Form::open(['route'=>'categories.bulk', 'class'=>'col-md-3', 'style="', 'padding: 0px !important;"']) }}
                                 <div class="form-group col-md-8" style="padding: 0px;">
                                     {{ Form::select('action', ['Bulk Actions', 'Delete', 'Move to Trash'], null,['class'=>'form-control']) }}
                                 </div>
@@ -72,7 +72,7 @@
                                     {{ Form::submit('Apply', ['class'=>'btn btn-default']) }}
                                 </div>
                             {{ Form::close() }}
-                            {{ Form::open(['route'=>'posts.create', 'class'=>'col-md-6', 'style="', 'padding: 0px !important;"']) }}
+                            {{ Form::open(['route'=>'categories.create', 'class'=>'col-md-6', 'style="', 'padding: 0px !important;"']) }}
                                 <div class="form-group col-md-4" style="padding: 0px;">
                                     {{ Form::select('action', ['All dates'], null,['class'=>'form-control']) }}
                                 </div>
@@ -88,56 +88,30 @@
                                 <thead>
                                     <tr>
                                         <th>{{ Form::checkbox('checkall', null) }}</th>
-                                        <th>Title</th>
-                                        <th>Body</th>
-                                        <th>Author</th>
-                                        <th>Categories</th>
-                                        <th>Tags</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <td>Author</td>
                                         <th>Published</th>
                                         <th class="no-sort" align="center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($posts as $key => $post)
+                                    @foreach($categories as $key => $category)
                                     <tr>
-                                        <td>{{ Form::checkbox('checked-post', $post->id) }}</td>
-                                        <td>{{ $post->title }}</td>
-                                        <td>{!! str_limit($post->body, 40) !!}</td>
-                                        <td>{{ $post->authenticated->first()->username }}</td>
-                                        <td>
-                                            @php
-                                             if(count($post->categories)){
-                                              $cate = [];
-                                              foreach($post->categories as $category){
-                                               $cate[] = $category->name;
-                                              }
-                                              $category = implode(", ", $cate);
-                                             }
-                                             echo str_limit(isset($category)?$category:'NAN', 20);
-                                            @endphp
-                                        </td>
-                                        <td>
-                                            @php
-                                             if(count($post->tags)){
-                                              $cate = [];
-                                              foreach($post->tags as $tag){
-                                               $cate[] = $tag->name;
-                                              }
-                                              $tag = implode(", ", $cate);
-                                             }
-                                             echo str_limit(isset($tag)?$tag:'NAN', 20);
-                                            @endphp
-                                        </td>
-                                        <td>{{ $post->created_at }}</td>
+                                        <td>{{ Form::checkbox('checked-category', $category->id) }}</td>
+                                        <td>{{ $category->name }}</td>
+                                        <td>{!! str_limit($category->description, 40) !!}</td>
+                                        <td>{{ count($category->authenticated) >= 1?$category->authenticated->first()->username : 'NA' }}</td>
+                                        <td>{{ $category->created_at }}</td>
                                         @if(Request::is('*trashed'))
                                         <td align="center">
-                                            <a class="btn btn-xs btn-icon btn-circle btn-info" href="{{ route('posts.restore', $post->id) }}"><i class="fa fa-repeat"></i></a> | 
-                                            <a href="{{ route('posts.destroy', [$post->id,'force']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
+                                            <a class="btn btn-xs btn-icon btn-circle btn-info" href="{{ route('categories.restore', $category->id) }}"><i class="fa fa-repeat"></i></a> | 
+                                            <a href="{{ route('categories.destroy', [$category->id,'force']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
                                         </td>
                                         @else
                                         <td align="center">
-                                            <a class="btn btn-xs btn-icon btn-circle btn-warning" href="{{ route('posts.edit', $post->id) }}"><i class="fa fa-edit"></i></a> | 
-                                            <a href="{{ route('posts.destroy', [$post->id, 'trash']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
+                                            <a class="btn btn-xs btn-icon btn-circle btn-warning" href="{{ route('categories.edit', $category->id) }}"><i class="fa fa-edit"></i></a> | 
+                                            <a href="{{ route('categories.destroy', [$category->id, 'trash']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
                                         </td>
                                         @endif
                                     </tr>
@@ -146,7 +120,7 @@
                             </table>
                         </div>
                         <div class="panel-footer">
-                            {{ $posts->links() }}
+                            {{ $categories->links() }}
                         </div>
                     </div>
                     <!-- end panel -->
@@ -277,7 +251,7 @@
         });
         $(document).ready(function(){
             $('#my-table').DataTable({
-                "order": [[ 3, "desc" ]],
+                "order": [[ 2, "asc" ]],
                 "paging": false,
                 "searching": true,
                 "language": {

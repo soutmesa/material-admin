@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Repositories\User;
+namespace App\Repositories\Category;
 
-interface UserInterface
+interface CategoryInterface
 {
 
-    public function getAll();
+    public function getAll($opt);
 
-    public function getById($id);
+    public function getById($id, $opt);
 
-    public function create(array $datas);
+    public function create($datas);
 
-    public function update($id, array $datas);
+    public function update($id, $datas);
 
-    public function delete($id);
+    public function delete($id, $opt);
 }

@@ -4,6 +4,7 @@ namespace App\Repositories\User;
 
 use App\Repositories\User\UserInterface;
 use App\Databases\User;
+use Auth;
 
 class UserRepository implements UserInterface
 {
@@ -13,31 +14,65 @@ class UserRepository implements UserInterface
         $this->user = $user;
     }
 
-    public function getAll()
+    public function getAll($opt)
     {
-        return $this->user->get();
+        if( isset($opt) && $opt == "trashed"){
+            $users = $this->user->onlyTrashed()->paginate(10);
+        }else if(isset($opt) && $opt == ""){
+            $users = $this->user->get();
+        }else{
+            $users = $this->user->paginate(10);
+        }
+        return $users;
     }
 
-    public function getById($id)
+    public function getById($id, $opt)
     {
-        return $this->user->findById($id);
+        if(isset($opt) && $opt == "force"){
+            return$this->user->onlyTrashed()->where('id', '=', $id)->get()->first();
+        }
+        return $this->user->findOrFail($id);
     }
 
-    public function create(array $datas)
+    public function create($request)
     {
-        return $this->user->create($datas);
+        $datas = $request->all();
+        $this->user = $this->user->create($datas);
+        $this->user->authenticated()->attach(Auth::id());
+        if($request->has('roles'))
+        {
+            $this->user->roles()->attach($datas['roles']);
+        }
+        return $this->user;
     }
 
-    public function update($id, array $datas)
+    public function update($id, $request)
     {
-        $user = $this->user->findOrFail(id);
-        $user->user->update($datas);
-        return $user;
+        $datas = $request->all();
+        $this->user = $this->getById($id, '');
+        $this->user->update($datas);
+        if($request->has('roles'))
+        {
+            $this->user->roles()->sync($datas['roles']);
+        }
+        return $this->user;
     }
 
-    public function delete($id)
+    public function delete($id, $opt)
     {
-        $this->getById($id)->delete();
+        $user = $this->getById($id, $opt);
+        if($opt == "trash"){
+            $user->delete();
+        }else{
+            $user->forceDelete();
+            $user->authenticated()->detach(Auth::id());
+        }
         return true;
+    }
+
+    public function restore($id)
+    {
+        $user = $this->getById($id, 'force');
+        return $user->restore();
     }
 }

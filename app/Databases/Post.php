@@ -35,6 +35,6 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\Databases\Tag')->withTimestamps();
+        return $this->belongsToMany('App\Databases\Tag', 'post_tag', 'post_id', 'tag_id')->withTimestamps();
     }
 }

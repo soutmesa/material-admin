@@ -26,7 +26,6 @@ class PostRepository implements PostInterface
         }else{
             $posts = $this->post->paginate(10);
         }
-
         return $posts;
     }
 
@@ -35,38 +34,34 @@ class PostRepository implements PostInterface
         if(isset($opt) && $opt == "force"){
             return$this->post->onlyTrashed()->where('id', '=', $id)->get()->first();
         }
-
         return $this->post->findOrFail($id);
     }
 
     public function create($datas)
     {
         $post = $this->post->create($this->getRequest($datas));
-
         if($datas->has('tags')){
             $post->tags()->attach($datas['tags']);
         }
         if($datas->has('categories')){
             $post->categories()->attach($datas['categories']);
         }
-
         $post->authenticated()->attach(Auth::id());
-
         return $post;
     }
 
-    public function update($id, $tmp)
+    public function update($id, $request)
     {
-        $datas = $tmp->all();
-        $this->getById($id, "")->update($datas);
+        $datas = $request->all();
+        $this->post = $this->getById($id, "");
+        $this->post->update($datas);
 
-        if($tmp->has('tags')){
+        if($request->has('tags')){
             $this->post->tags()->sync($datas['tags']);
         }
-        if($tmp->has('categories')){
+        if($request->has('categories')){
             $this->post->categories()->sync($datas['categories']);
         }
-
         return $this->post;
     }
 
@@ -79,28 +74,23 @@ class PostRepository implements PostInterface
             $post->forceDelete();
             $post->authenticated()->detach(Auth::id());
         }
-        
         return true;
     }
 
     public function restore($id)
     {
-        $post = $this->post->onlyTrashed()->where('id', '=', $id)->get()->first();
-
+        $post = $this->getById($id, 'force');
         return $post->restore();
     }
 
     private function getRequest($request)
     {
         $datas = $request->all();
-        
         $datas['user_id'] = 1;
-
         if($request->has('title'))
         {
             $datas['slug'] = $datas['title'];
         }
-
         if ($request->hasFile('profile'))
         {
             $photo = $request->file('profile');
@@ -110,7 +100,6 @@ class PostRepository implements PostInterface
             $photo->move($destination, $fileName);
             $datas['profile'] = $fileName;
         }
-
         return $datas;
     }
 }

@@ -1,10 +1,11 @@
 @extends ('layouts.home_layouts')
 
-@section ('title', 'Post - New')
+@section ('title', 'Users - New')
 
 @section ('stylesheets')
 	<link href="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
 @endsection
 
 @section ('content')
@@ -31,8 +32,7 @@
 
             <!-- begin row -->
 			<div class="row">
-                {{ Form::open(['route'=>['posts.update', $post->id], 'name'=>'wysihtml5']) }}
-                {{ method_field('PATCH') }}
+                {{ Form::open(['route'=>['users.store']]) }}
                 <!-- begin col-8 -->
                 <div class="col-md-8">
 			        <!-- begin panel -->
@@ -44,12 +44,60 @@
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                             </div>
-                            <h4 class="panel-title">Post - New</h4>
+                            <h4 class="panel-title">Users - Edit</h4>
                         </div>
                         <div class="panel-body">
-                            {{ Form::text('title', $post->title, ['class'=>'form-control', 'placeholder'=>'Enter title ...']) }}
-                            <br>
-                            {{ Form::textarea('body', $post->body, ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    {{ Form::text('username', old('username'), ['class'=>'form-control', 'placeholder'=>'Enter user name ...']) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ Form::text('firstname', old('firstname'), ['class'=>'form-control', 'placeholder'=>'Enter first name ...']) }}
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    {{ Form::text('lastname', old('lastname'), ['class'=>'form-control', 'placeholder'=>'Enter last name ...']) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ Form::email('email', old('email'), ['class'=>'form-control', 'placeholder'=>'Enter email ...']) }}
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    {{ Form::password('password', ['class'=>'form-control', 'placeholder'=>'Enter password ...']) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ Form::password('password_confirmation', ['class'=>'form-control', 'placeholder'=>'Re-enter password ...']) }}
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    {{ Form::select('gender', ['female'=>'Female', 'male'=>'Male'], null, ['class'=>'form-control']) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ Form::text('phone', old('phone'), ['class'=>'form-control', 'placeholder'=>'Enter phone number here ...']) }}
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    {{ Form::text('dob', old('dob'), ['class'=>'form-control', 'id'=>'datepicker-default']) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ Form::textarea('addres', old('addres'), ['class'=>'textarea form-control', 'rows'=>'3', 'placeholder'=>'Enter address here ...']) }}
+                                </div>
+                            </div>
+                            <br><br>
+                            <br><br>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    {{ Form::textarea('pob', old('addres'), ['class'=>'textarea form-control', 'rows'=>'3', 'placeholder'=>'Enter place of birth here ...']) }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- end panel -->
@@ -68,18 +116,7 @@
                             <h4 class="panel-title">WYSIHTML5</h4>
                         </div>
                         <div class="panel-body">
-                            <select class="multiple-select2 category form-control"  name="categories[]" multiple="multiple">
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                            </select>
-                            <br>
-                            <br>
-                            <select class="multiple-select2 tag form-control"  name="tags[]" multiple="multiple">
-                            @foreach($tags as $tag)
-                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                            @endforeach
-                            </select>
+                            {{ Form::select('roles[]', $roles, null,['class'=>'multiple-select2 role form-control', 'multiple'=>'multiple']) }}
                             <br>
                             <br>
                             {{ Form::submit('Update', ['class'=>'btn btn-primary'])}}
@@ -172,16 +209,20 @@
 	<script type="text/javascript" src="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.all.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('assets/js/form-wysiwyg.demo.min.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/dist/js/select2.min.js')}}"></script>
+    <script type="text/javascript" src="https://unpkg.com/flatpickr"></script>
 	<script type="text/javascript" type="text/javascript">
 		$(document).ready(function() {
 			FormWysihtml5.init();
-            $('.multiple-select2.category').select2({
-                placeholder: " Select Categories"
-            }).val({{$post->categories()->getRelatedIds()}}).trigger('change');
+            $('.multiple-select2.role').select2({
+                placeholder: " Select Roles"
+            });
 
-            $('.multiple-select2.tag').select2({
-                placeholder: " Select Tags"
-            }).val({{$post->tags()->getRelatedIds()}}).trigger('change');
+            flatpickr('#datepicker-default', {
+                theme: 'material_blue',
+                dateFormat: 'd-m-Y',
+                minDate: '01-01-1920',
+                maxDate: '01-01-1999',
+            });
 		});
-	</script>	
+	</script>
 @endsection

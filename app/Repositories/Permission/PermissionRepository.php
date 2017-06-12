@@ -23,7 +23,6 @@ class PermissionRepository implements PermissionInterface
         }else{
             $permissions = $this->permission->paginate(10);
         }
-
         return $permissions;
     }
 
@@ -32,7 +31,6 @@ class PermissionRepository implements PermissionInterface
         if(isset($opt) && $opt == "force"){
             return $this->permission->onlyTrashed()->where('id', '=', $id)->get()->first();
         }
-
         return $this->permission->findOrFail($id);
     }
 
@@ -45,9 +43,9 @@ class PermissionRepository implements PermissionInterface
 
     public function update($id, $datas)
     {
-        $permission = $this->getById($id, "");
-        $permission->update($datas->all());
-        return $permission;
+        $this->permission = $this->getById($id, "");
+        $this->permission->update($datas->all());
+        return $this->permission;
     }
 
     public function delete($id, $opt)

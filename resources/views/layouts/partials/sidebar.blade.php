@@ -140,26 +140,26 @@
                     <li class="{{ setActive('posts/new') }}"><a href="{{ route('posts.create') }}">New post</a></li>
                 </ul>
             </li>
-            <li class="has-sub">
+            <li class="has-sub {{ setActive('*tags*') }}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">label</i>
                     <span>Tags</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ route('tags.index','published') }}">All tags</a></li>
-                    <li><a href="{{ route('tags.create') }}">New tag</a></li>
+                    <li class="{{ setActive('tags/status-tag*') }}"><a href="{{ route('tags.index','published') }}">All tags</a></li>
+                    <li class="{{ setActive('tags/new') }}"><a href="{{ route('tags.create') }}">New tag</a></li>
                 </ul>
             </li>
-            <li class="has-sub">
+            <li class="has-sub {{ setActive('*categories*') }}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">loyalty</i>
                     <span>Categories</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ route('categories.index', 'published') }}">All categories</a></li>
-                    <li><a href="{{ route('categories.create') }}">New category</a></li>
+                    <li class="{{ setActive('categories/status-cate*') }}"><a href="{{ route('categories.index', 'published') }}">All categories</a></li>
+                    <li class="{{ setActive('categories/create') }}"><a href="{{ route('categories.create') }}">New category</a></li>
                 </ul>
             </li>
             <li class="has-sub">
@@ -168,15 +168,15 @@
                     <span>Gallory</span>
                 </a>
             </li>
-            <li class="has-sub">
+            <li class="has-sub {{ setActive('*roles*') }}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="material-icons">settings</i>
                     <span>Roles</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{ route('roles.index', 'published') }}">All roles</a></li>
-                    <li><a href="{{ route('roles.create') }}">New role</a></li>
+                    <li class="{{ setActive('roles/status-role*') }}"><a href="{{ route('roles.index', 'published') }}">All roles</a></li>
+                    <li class="{{ setActive('roles/create*') }}"><a href="{{ route('roles.create') }}">New role</a></li>
                 </ul>
             </li>
             <li class="has-sub {{ setActive('*permissions*') }}">
@@ -188,6 +188,17 @@
                 <ul class="sub-menu">
                     <li class="{{ setActive('permissions/status-perm*') }}"><a href="{{ route('permissions.index', 'all') }}">All permissions</a></li>
                     <li class="{{ setActive('permissions/create') }}"><a href="{{ url('permissions/create') }}">New permission</a></li>
+                </ul>
+            </li>
+            <li class="has-sub {{ setActive('*users*') }}">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="material-icons">people</i>
+                    <span>Users</span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="{{ setActive('users/status-user*') }}"><a href="{{ route('users.index', 'all') }}">All users</a></li>
+                    <li class="{{ setActive('users/create') }}"><a href="{{ url('users/create') }}">New user</a></li>
                 </ul>
             </li>
             <!-- <li class="has-sub">
