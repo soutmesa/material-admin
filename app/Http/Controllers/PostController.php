@@ -41,28 +41,24 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $this->post->create($request);
-
         return redirect('posts/status-post=all')->withMessage('Post has been created successfully!!!');
     }
 
     public function update($id, Request $request)
     {
         $this->post->update($id, $request);
-
         return redirect('posts/status-post=all')->withMessage('Post has been updated successfully!!!');
     }
 
     public function destroy($id,$act=null)
     { 
-        $callBack = $this->post->delete($id, $act);
-
+        $this->post->delete($id, $act);
         return redirect('posts/status-post=all')->withMessage('Post has been deleted !!!');
     }
 
     public function restore($id)
     {
         $this->post->restore($id);
-
         return redirect('posts/status-post=all')->withMessage('Post has been restored !!!');
     }
 }

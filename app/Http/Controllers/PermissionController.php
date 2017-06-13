@@ -43,4 +43,16 @@ class PermissionController extends Controller
         $permission = $this->permission->update($id, $request);
         return redirect('permissions/status-permi=all')->withMessage('Permission has been updated successfully!!!');
     }
+
+    public function destroy($id,$act=null)
+    { 
+        $this->permission->delete($id, $act);
+        return redirect('permissions/status-permi=all')->withMessage('Permission has been deleted !!!');
+    }
+
+    public function restore($id)
+    {
+        $this->permission->restore($id);
+        return redirect('permissions/status-permi=all')->withMessage('Permission has been restored !!!');
+    }
 }

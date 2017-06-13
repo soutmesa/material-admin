@@ -108,7 +108,7 @@
                                         @if(Request::is('*trashed'))
                                         <td align="center">
                                             <a class="btn btn-xs btn-icon btn-circle btn-info" href="{{ route('roles.restore', $role->id) }}"><i class="fa fa-repeat"></i></a> | 
-                                            <a href="{{ route('roles.destroy', [$role->id,'force']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
+                                            <a href="{{ route('roles.destroy', [$role->id, 'force']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
                                         </td>
                                         @else
                                         <td align="center">
@@ -253,7 +253,7 @@
         });
         $(document).ready(function(){
             $('#my-table').DataTable({
-                "order": [[ 2, "asc" ]],
+                "order": [[ 1, "desc" ]],
                 "paging": false,
                 "searching": true,
                 "language": {

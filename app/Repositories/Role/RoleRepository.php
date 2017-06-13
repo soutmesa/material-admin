@@ -21,7 +21,7 @@ class RoleRepository implements RoleInterface
         }else if(isset($opt) && $opt == ""){
             $roles = $this->role->get();
         }else{
-            $roles = $this->role->paginate(10);
+            $roles = $this->role->orderBy('created_at', 'desc')->paginate(10);;
         }
         return $roles;
     }
@@ -60,7 +60,19 @@ class RoleRepository implements RoleInterface
 
     public function delete($id, $opt)
     {
-        $this->getById($id, $opt)->delete();
+        $role = $this->getById($id, $opt);
+        if($opt == "trash"){
+            $role->delete();
+        }else{
+            $role->forceDelete();
+            $role->authenticated()->detach(Auth::id());
+        }
         return true;
+    }
+
+    public function restore($id)
+    {
+        $role = $this->getById($id, 'force');
+        return $role->restore();
     }
 }

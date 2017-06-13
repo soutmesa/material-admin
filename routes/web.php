@@ -42,7 +42,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('{id}',['as'=>'roles.show','uses'=>'RoleController@show']);
 		Route::get('{id}/edit',['as'=>'roles.edit','uses'=>'RoleController@edit','middleware' => ['permission:role-edit']]);
 		Route::post('{id}',['as'=>'roles.update','uses'=>'RoleController@update','middleware' => ['permission:role-edit']]);
-		Route::delete('{id}',['as'=>'roles.destroy','uses'=>'RoleController@destroy','middleware' => ['permission:role-delete']]);
+		Route::get('{id}/delete-{act?}',['as'=>'roles.destroy','uses'=>'RoleController@destroy','middleware' => ['permission:role-delete']]);
+		Route::get('{id}/restore',['as'=>'roles.restore','uses'=>'RoleController@restore']);
 		Route::delete('?action={act?}',['as'=>'roles.bulk','uses'=>'RoleController@destroy','middleware' => ['permission:role-delete']]);
 	});
 
@@ -53,7 +54,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::get('{id}',['as'=>'permissions.show','uses'=>'PermissionController@show']);
 		Route::get('{id}/edit',['as'=>'permissions.edit','uses'=>'PermissionController@edit','middleware' => ['permission:permi-edit']]);
 		Route::post('{id}',['as'=>'permissions.update','uses'=>'PermissionController@update','middleware' => ['permission:permi-edit']]);
-		Route::delete('{id}',['as'=>'permissions.destroy','uses'=>'PermissionController@destroy','middleware' => ['permission:permi-delete']]);
+		Route::get('{id}/delete-{act?}',['as'=>'permissions.destroy','uses'=>'PermissionController@destroy','middleware' => ['permission:permi-delete']]);
+		Route::get('{id}/restore',['as'=>'permissions.restore','uses'=>'PermissionController@restore']);
 		Route::get('?action={act?}',['as'=>'permissions.bulk','uses'=>'PermissionController@destroy','middleware' => ['permission:permi-list|permi-create|permi-edit|permi-delete']]);
 	});
 

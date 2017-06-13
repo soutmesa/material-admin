@@ -21,7 +21,7 @@ class TagRepository implements TagInterface
         }else if(isset($opt) && $opt == ""){
             $tags = $this->tag->get();
         }else{
-            $tags = $this->tag->paginate(10);
+            $tags = $this->tag->orderBy('created_at', 'desc')->paginate(10);
         }
         return $tags;
     }

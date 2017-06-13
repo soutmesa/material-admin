@@ -21,7 +21,7 @@ class CategoryRepository implements CategoryInterface
         }else if(isset($opt) && $opt == ""){
             $categories = $this->category->get();
         }else{
-            $categories = $this->category->paginate(10);
+            $categories = $this->category->orderBy('created_at', 'desc')->paginate(10);
         }
         return $categories;
     }

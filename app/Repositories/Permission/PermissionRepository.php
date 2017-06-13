@@ -21,7 +21,7 @@ class PermissionRepository implements PermissionInterface
         }else if(isset($opt) && $opt == ""){
             $permissions = $this->permission->get();
         }else{
-            $permissions = $this->permission->paginate(10);
+            $permissions = $this->permission->orderBy('created_at', 'desc')->paginate(10);
         }
         return $permissions;
     }
@@ -50,12 +50,19 @@ class PermissionRepository implements PermissionInterface
 
     public function delete($id, $opt)
     {
-        $this->getById($id)->delete();
+        $permission = $this->getById($id, $opt);
+        if($opt == "trash"){
+            $permission->delete();
+        }else{
+            $permission->forceDelete();
+            $permission->authenticated()->detach(Auth::id());
+        }
         return true;
     }
 
     public function restore($id)
     {
-
+        $permission = $this->getById($id, 'force');
+        return $permission->restore();
     }
 }

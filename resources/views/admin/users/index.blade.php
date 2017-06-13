@@ -12,7 +12,7 @@
         .no-action {color: #000;}
     </style>
 @endsection
-
+{{ dd(Auth::user()->hasRole('owner')) }}
 @section ('content')
 	
 	<!-- begin #page-container -->
@@ -99,6 +99,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($users as $key => $user)
+                                    @if($user->id != Auth::id())
                                     <tr>
                                         <td>{{ Form::checkbox('checked-user', $user->id) }}</td>
                                         <td>{{ $user->username }}</td>
@@ -119,6 +120,7 @@
                                         </td>
                                         @endif
                                     </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>

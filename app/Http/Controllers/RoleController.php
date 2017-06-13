@@ -47,4 +47,16 @@ class RoleController extends Controller
         $this->role->update($id, $request);
         return redirect('roles/status-role=all')->withMessage('Role has been updated successfully!!!');
     }
+
+    public function destroy($id, $opt)
+    {
+        $this->role->delete($id, $opt);
+        return redirect('roles/status-role=all')->withMessage('Role has been deleted successfully!!!');
+    }
+
+    public function restore($id)
+    {
+        $this->role->restore($id);
+        return redirect('roles/status-role=all')->withMessage('Role has been restored !!!');
+    }
 }

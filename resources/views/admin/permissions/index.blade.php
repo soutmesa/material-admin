@@ -253,7 +253,7 @@
         });
         $(document).ready(function(){
             $('#my-table').DataTable({
-                "order": [[ 2, "asc" ]],
+                "order": [[ 1, "asc" ]],
                 "paging": false,
                 "searching": true,
                 "language": {
