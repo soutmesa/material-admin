@@ -44,6 +44,16 @@
                             <h4 class="panel-title">Post - New</h4>
                         </div>
                         <div class="panel-body">
+                            @if(count($errors))
+                                <div class="alert alert-danger">
+                                    <a href="#" class="close">&times;</a>
+                                    <ol>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ol>
+                                </div>
+                            @endif
                             {{ Form::open(['route'=>['tags.update', $tag->id]]) }}
                                 {{ method_field('PATCH') }}
                                 {{ Form::text('name', $tag->name, ['class'=>'form-control', 'placeholder'=>'Enter name ...']) }}
@@ -161,6 +171,21 @@
 	<script type="text/javascript" type="text/javascript">
 		$(document).ready(function() {
 			FormWysihtml5.init();
+
+            function disabledAlert()
+            {
+                if($('div').hasClass('alert'))
+                {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                    });
+                }else{
+                    disabledInterval();
+                }
+            }
+            $('.close').on('click', function(){
+                disabledAlert();
+            });
 		});
 	</script>	
 @endsection

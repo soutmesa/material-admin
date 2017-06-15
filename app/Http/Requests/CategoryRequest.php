@@ -27,4 +27,14 @@ class CategoryRequest extends Request
             'name' => 'required|unique:categories|min:5|max:20'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.unique' => 'Opp, category name already taken',
+            'name.required' => 'Opp, you forgot your category name!!!',
+            'name.min' => 'Opp, category name at least has 5 characters!!!',
+            'name.max' => 'Opp, maximum characters of category name must be at 20 !!!'
+        ];
+    }
 }

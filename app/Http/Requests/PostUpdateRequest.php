@@ -27,4 +27,13 @@ class PostUpdateRequest extends Request
             'title' => 'required|min:5|max:50',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'Opp, you cannot remove your post name!!!',
+            'title.min' => 'Opp, post name at least has 5 characters!!!',
+            'title.max' => 'Opp, maximum characters of name must be at 100 !!!'
+        ];
+    }
 }

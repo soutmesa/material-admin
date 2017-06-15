@@ -24,7 +24,17 @@ class PostRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|unique:posts|min:5|max:500'
+            'title' => 'required|unique:posts|min:5|max:100'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.unique' => 'Opp, post name already taken!!!',
+            'title.required' => 'Opp, you forgot your post name!!!',
+            'title.min' => 'Opp, post name at least has 5 characters!!!',
+            'title.max' => 'Opp, maximum characters of name must be at 100 !!!'
         ];
     }
 }

@@ -28,4 +28,16 @@ class PermissionUpdateRequest extends Request
             'display_name' => 'required|min:5|max:100',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'Opp, you cannot remove your permission name!!!',
+            'title.min' => 'Opp, permission name at least has 5 characters!!!',
+            'title.max' => 'Opp, maximum characters of name must be at 20 !!!',
+            'display_name.required' => 'Opp, you cannot remove your permission diplay name!!!',
+            'display_name.min' => 'Opp, permission diplay name at least has 5 characters!!!',
+            'display_name.max' => 'Opp, maximum characters of diplay name must be at 100 !!!'
+        ];
+    }
 }

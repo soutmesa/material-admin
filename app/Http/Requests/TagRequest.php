@@ -27,4 +27,12 @@ class TagRequest extends Request
             'name' => 'required|unique:tags',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Opp, you forgot your tag name!',
+            'name.unique' => 'Tag name already taken',
+        ];
+    }
 }

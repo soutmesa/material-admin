@@ -24,7 +24,15 @@ class TagUpdateRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:tags,name,' . $this->id
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.unique' => 'Opp, tag name already taken',
+            'name.required' => 'Opp, you cannot remove your tag name!'
         ];
     }
 }
