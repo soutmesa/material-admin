@@ -12,7 +12,7 @@
         .no-action {color: #000;}
     </style>
 @endsection
-{{ dd(Auth::user()->hasRole('owner')) }}
+{{-- dd(Auth::user()->hasRole('owner')) --}}
 @section ('content')
 	
 	<!-- begin #page-container -->

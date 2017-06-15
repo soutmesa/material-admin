@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\PermissionRequest;
+use App\Http\Requests\PermissionUpdateRequest;
 use App\Repositories\Permission\PermissionRepository;
 
 class PermissionController extends Controller
@@ -26,7 +27,7 @@ class PermissionController extends Controller
         return view('admin.permissions.create');
     }
 
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
         $this->permission->create($request);
         return redirect('permissions/status-permi=all')->withMessage('Permission has been created successfully!!!');
@@ -38,7 +39,7 @@ class PermissionController extends Controller
         return view('admin.permissions.edit', compact('permission'));
     }
 
-    public function update($id, Request $request)
+    public function update($id, PermissionUpdateRequest $request)
     {
         $permission = $this->permission->update($id, $request);
         return redirect('permissions/status-permi=all')->withMessage('Permission has been updated successfully!!!');

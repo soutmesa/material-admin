@@ -47,6 +47,16 @@
                             <h4 class="panel-title">Post - New</h4>
                         </div>
                         <div class="panel-body">
+                            @if(count($errors))
+                                <div class="alert alert-danger">
+                                    <a href="#" class="close">&times;</a>
+                                    <ol>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ol>
+                                </div>
+                            @endif
                             {{ Form::text('title', $post->title, ['class'=>'form-control', 'placeholder'=>'Enter title ...']) }}
                             <br>
                             {{ Form::textarea('body', $post->body, ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
@@ -80,8 +90,7 @@
                                 <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                             @endforeach
                             </select>
-                            <br>
-                            <br>
+                            <hr>
                             {{ Form::submit('Update', ['class'=>'btn btn-primary'])}}
                         </div>
                     </div>
@@ -175,6 +184,7 @@
 	<script type="text/javascript" type="text/javascript">
 		$(document).ready(function() {
 			FormWysihtml5.init();
+
             $('.multiple-select2.category').select2({
                 placeholder: " Select Categories"
             }).val({{$post->categories()->getRelatedIds()}}).trigger('change');
@@ -182,6 +192,21 @@
             $('.multiple-select2.tag').select2({
                 placeholder: " Select Tags"
             }).val({{$post->tags()->getRelatedIds()}}).trigger('change');
+
+            function disabledAlert()
+            {
+                if($('div').hasClass('alert'))
+                {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                    });
+                }else{
+                    disabledInterval();
+                }
+            }
+            $('.close').on('click', function(){
+                disabledAlert();
+            });
 		});
 	</script>	
 @endsection

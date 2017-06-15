@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\TagUpdateRequest;
+use App\Http\Requests\TagRequest;
 use App\Repositories\Tag\TagRepository;
 
 class TagController extends Controller
@@ -40,7 +41,7 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
         $this->tag->create($request);
         return redirect('tags/status-tag=all')->withMessage('Tag has been created successfully!!!');
@@ -76,7 +77,7 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update($id, TagUpdateRequest $request)
     {
         $this->tag->update($id, $request);
         return redirect('tags/status-tag=all')->withMessage('Tag has been updated successfully!!!');

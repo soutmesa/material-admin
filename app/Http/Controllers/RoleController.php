@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\RoleUpdateRequest;
+use App\Http\Requests\RoleRequest;
 use App\Repositories\Role\RoleRepository;
 use App\Databases\Role;
 use App\Databases\Permission;
@@ -29,7 +30,7 @@ class RoleController extends Controller
     	return view('admin.roles.create', compact('permissions'));
     }
 
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
         $this->role->create($request);
         return redirect('roles/status-role=all')->withMessage('Role has been created successfully!!!');
@@ -42,7 +43,7 @@ class RoleController extends Controller
         return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
-    public function update($id, Request $request)
+    public function update($id, RoleUpdateRequest $request)
     {
         $this->role->update($id, $request);
         return redirect('roles/status-role=all')->withMessage('Role has been updated successfully!!!');

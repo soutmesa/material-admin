@@ -4,6 +4,7 @@
 
 @section ('stylesheets')
 	<link href="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('assets/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" />
 @endsection
 
 @section ('content')
@@ -45,11 +46,19 @@
                             <h4 class="panel-title">Post - New</h4>
                         </div>
                         <div class="panel-body">
+                            @if(count($errors))
+                                <div class="alert alert-danger">
+                                    <a href="#" class="close">&times;</a>
+                                    <ol>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ol>
+                                </div>
+                            @endif
                             {{ Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=>'Enter title ...']) }}
                             <br>
                             {{ Form::textarea('body', old('body'), ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
-                            <br>
-                            {{ Form::submit('Publish', ['class'=>'btn btn-default'])}}
                         </div>
                     </div>
                     <!-- end panel -->
@@ -68,7 +77,22 @@
                             <h4 class="panel-title">WYSIHTML5</h4>
                         </div>
                         <div class="panel-body">
-                            
+                            <label>Categories:</label>
+                            <select class="multiple-select2 category form-control"  name="categories[]" multiple="multiple">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                            </select>
+                            <br>
+                            <br>
+                            <label>Tags:</label>
+                            <select class="multiple-select2 tag form-control"  name="tags[]" multiple="multiple">
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                            @endforeach
+                            </select>
+                            <hr>
+                            {{ Form::submit('Publish', ['class'=>'btn btn-primary'])}}
                         </div>
                     </div>
                 </div>
@@ -157,9 +181,33 @@
 @section ('scripts')
 	<script type="text/javascript" src="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.all.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('assets/js/form-wysiwyg.demo.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/select2/dist/js/select2.min.js')}}"></script>
 	<script type="text/javascript" type="text/javascript">
 		$(document).ready(function() {
 			FormWysihtml5.init();
+
+            $('.multiple-select2.category').select2({
+                placeholder: " Select Categories"
+            });
+
+            $('.multiple-select2.tag').select2({
+                placeholder: " Select Tags"
+            });
+
+            function disabledAlert()
+            {
+                if($('div').hasClass('alert'))
+                {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                    });
+                }else{
+                    disabledInterval();
+                }
+            }
+            $('.close').on('click', function(){
+                disabledAlert();
+            });
 		});
 	</script>	
 @endsection

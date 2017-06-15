@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use App\Repositories\Category\CategoryRepository;
 
 class CategoryController extends Controller
@@ -25,7 +26,7 @@ class CategoryController extends Controller
     	return view('admin.categories.create');
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
     	$this->category->create($request);
     	return redirect('categories/status-cate=all')->withMessage('Category has been created successfully!!!');
@@ -37,7 +38,7 @@ class CategoryController extends Controller
     	return view('admin.categories.edit', compact('category'));
     }
 
-    public function update($id, Request $request)
+    public function update($id, CategoryUpdateRequest $request)
     {
     	$this->category->update($id, $request);
     	return redirect('categories/status-cate=all')->withMessage('Category has been updated successfully!!!');

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Post\PostRepository;
-use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Databases\Post;
 use App\Databases\Category;
 use App\Databases\Tag;
@@ -35,16 +36,18 @@ class PostController extends Controller
 
     public function create()
     {
-    	return view('admin.posts.create');
+        $categories = Category::get();
+        $tags = Tag::get();
+    	return view('admin.posts.create', compact('categories', 'tags'));
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $this->post->create($request);
         return redirect('posts/status-post=all')->withMessage('Post has been created successfully!!!');
     }
 
-    public function update($id, Request $request)
+    public function update($id, PostUpdateRequest $request)
     {
         $this->post->update($id, $request);
         return redirect('posts/status-post=all')->withMessage('Post has been updated successfully!!!');

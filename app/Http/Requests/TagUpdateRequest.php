@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class MediaRequest extends Request
+class TagUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class MediaRequest extends Request
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
         ];
     }
 }

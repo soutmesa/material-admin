@@ -44,13 +44,23 @@
                             <h4 class="panel-title">Post - New</h4>
                         </div>
                         <div class="panel-body">
+                            @if(count($errors))
+                                <div class="alert alert-danger">
+                                    <a href="#" class="close">&times;</a>
+                                    <ol>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ol>
+                                </div>
+                            @endif
                             {{ Form::open(['route'=>['categories.update', $category->id]]) }}
                                 {{ method_field('PATCH') }}
                                 {{ Form::text('name', $category->name, ['class'=>'form-control', 'placeholder'=>'Enter name ...']) }}
                                 <br>
                                 {{ Form::textarea('description', $category->description, ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
                                 <br>
-                                {{ Form::submit('Publish', ['class'=>'btn btn-default'])}}
+                                {{ Form::submit('Publish', ['class'=>'btn btn-primary'])}}
 							{{ Form::close() }}
                         </div>
                     </div>
@@ -161,6 +171,21 @@
 	<script type="text/javascript" type="text/javascript">
 		$(document).ready(function() {
 			FormWysihtml5.init();
+
+            function disabledAlert()
+            {
+                if($('div').hasClass('alert'))
+                {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                    });
+                }else{
+                    disabledInterval();
+                }
+            }
+            $('.close').on('click', function(){
+                disabledAlert();
+            });
 		});
 	</script>	
 @endsection

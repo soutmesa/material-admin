@@ -46,13 +46,22 @@
                             <h4 class="panel-title">Post - New</h4>
                         </div>
                         <div class="panel-body">
+                            @if(count($errors))
+                                <div class="alert alert-danger">
+                                    <a href="#" class="close">&times;</a>
+                                    <ol>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ol>
+                                </div>
+                            @endif
                             {{ Form::text('name', $role->name, ['class'=>'form-control', 'placeholder'=>'Enter name ...']) }}
                             <br>
                             {{ Form::text('display_name', $role->display_name, ['class'=>'form-control', 'placeholder'=>'Enter display name ...']) }}
                             <br>
                             {{ Form::textarea('description', $role->description, ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
-                            <br>
-                            {{ Form::submit('Publish', ['class'=>'btn btn-default'])}}
+                            
                         </div>
                     </div>
                     <!-- end panel -->
@@ -76,6 +85,8 @@
                                 <option value="{{ $permi->id }}">{{ $permi->display_name }}</option>
                             @endforeach
                             </select>
+                            <hr>
+                            {{ Form::submit('Publish', ['class'=>'btn btn-primary'])}}
                         </div>
                     </div>
                 </div>
@@ -168,9 +179,25 @@
 	<script type="text/javascript" type="text/javascript">
 		$(document).ready(function() {
 			FormWysihtml5.init();
+
             $('.multiple-select2').select2({
                 placeholder: " Select Categories"
             }).val({{$role->permissions()->getRelatedIds()}}).trigger('change');
+
+            function disabledAlert()
+            {
+                if($('div').hasClass('alert'))
+                {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove(); 
+                    });
+                }else{
+                    disabledInterval();
+                }
+            }
+            $('.close').on('click', function(){
+                disabledAlert();
+            });
 		});
 	</script>
 @endsection
