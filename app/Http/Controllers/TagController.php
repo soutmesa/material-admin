@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\TagUpdateRequest;
 use App\Http\Requests\TagRequest;
 use App\Repositories\Tag\TagRepository;
@@ -89,9 +90,15 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,$act=null)
-    { 
-        $this->tag->delete($id, $act);
+    public function destroy($id,$act=null, Request $request=null)
+    {
+        if(isset($request) && $request!=null){
+            $ids = isset($request->all()['ids'][0])?$request->all()['ids'][0]:'0';
+            $ids = explode(',',$ids);
+            $this->tag->delete($ids, $act);
+        }else{
+            $this->tag->delete($id, $act);
+        }
         return redirect('tags/status-tag=all')->withMessage('Tag has been deleted !!!');
     }
 

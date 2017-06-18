@@ -17,9 +17,9 @@ class TagRepository implements TagInterface
     public function getAll($opt)
     {
         if( isset($opt) && $opt == "trashed"){
-            $tags = $this->tag->onlyTrashed()->paginate(10);
+            $tags = $this->tag->onlyTrashed()->orderBy('deleted_at', 'desc')->paginate(10);
         }else if(isset($opt) && $opt == ""){
-            $tags = $this->tag->get();
+            $tags = $this->tag->orderBy('created_at', 'desc')->get();
         }else{
             $tags = $this->tag->orderBy('created_at', 'desc')->paginate(10);
         }
@@ -49,13 +49,27 @@ class TagRepository implements TagInterface
 
     public function delete($id, $opt)
     {
-        $tag = $this->getById($id, $opt);
-        if($opt == "trash"){
-            $tag->delete();
+        if(is_array($id)){
+            foreach($id as $i){
+                $tag = $this->getById($i, $opt);
+                if($opt == "trash"){
+                    $tag->delete();
+                }else{
+                    $tag = $this->getById($id, $opt);
+                    $tag->forceDelete();
+                    $tag->authenticated()->detach(Auth::id());
+                }
+            }
         }else{
-            $tag->forceDelete();
-            $tag->authenticated()->detach(Auth::id());
+            $tag = $this->getById($id, $opt);
+            if($opt == "trash"){
+                $tag->delete();
+            }else{
+                $tag->forceDelete();
+                $tag->authenticated()->detach(Auth::id());
+            }
         }
+
         return true;
     }
 

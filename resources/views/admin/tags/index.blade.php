@@ -64,23 +64,24 @@
                                 @if($published >= 1) | <a class="<?php if(Request::is('*published')) echo 'no-action';?>" href="{{ route('tags.index', 'published') }}">Published ({{ $published }})</a>@endif 
                                 @if($trashed >= 1) | <a class="<?php if(Request::is('*trashed')) echo 'no-action';?>" href="{{ route('tags.index', 'trashed') }}">Trash ({{ $trashed }})</a>@endif
                             </p>
-                            {{ Form::open(['route'=>'tags.bulk', 'class'=>'col-md-3', 'style="', 'padding: 0px !important;"']) }}
+                            {{ Form::open([null, 'class'=>'col-md-3', 'style="', 'padding: 0px !important;"', 'name'=>'apply']) }}
+                                {{ Form::hidden('ids[]', null) }}
                                 <div class="form-group col-md-8" style="padding: 0px;">
-                                    {{ Form::select('action', ['Bulk Actions', 'Delete', 'Move to Trash'], null,['class'=>'form-control']) }}
+                                    {{ Form::select('action', ['0'=>'Bulk Actions', 'force'=>'Delete','trash'=>'Move to Trash'], null,['class'=>'form-control']) }}
                                 </div>
                                 <div class="form-group col-md-4" style="padding: 0px;">
-                                    {{ Form::submit('Apply', ['class'=>'btn btn-default']) }}
+                                    {{ Form::submit('Apply', ['class'=>'btn btn-primary apply']) }}
                                 </div>
                             {{ Form::close() }}
                             {{ Form::open(['route'=>'tags.create', 'class'=>'col-md-6', 'style="', 'padding: 0px !important;"']) }}
                                 <div class="form-group col-md-4" style="padding: 0px;">
-                                    {{ Form::select('action', ['All dates'], null,['class'=>'form-control']) }}
+                                    {{ Form::select('date', ['All dates'], null,['class'=>'form-control']) }}
                                 </div>
                                 <div class="form-group col-md-4" style="padding: 0px;">
-                                    {{ Form::select('action', ['All tags', 'Untag'], null,['class'=>'form-control']) }}
+                                    {{ Form::select('tags', ['All tags', 'Untag'], null,['class'=>'form-control']) }}
                                 </div>
                                 <div class="form-group col-md-4" style="padding: 0px;">
-                                    {{ Form::submit('Filter', ['class'=>'btn btn-default']) }}
+                                    {{ Form::submit('Filter', ['class'=>'btn btn-primary filter']) }}
                                 </div>
                             {{ Form::close() }}
                             <div class="clearfix"></div>
@@ -251,7 +252,7 @@
         });
         $(document).ready(function(){
             $('#my-table').DataTable({
-                "order": [[ 1, "asc" ]],
+                "order": [[ 1, "desc" ]],
                 "paging": false,
                 "searching": true,
                 "language": {
@@ -279,6 +280,23 @@
             {
                 clearInterval(mytimeinterval);
             }
+
+            $(document).off('click', '.apply').on('click', '.apply', function(event){
+//                event.preventDefault();
+                var getIds = [];
+                $('[name="checked-tag"]:checked').each(function(){
+                    getIds.push($(this).val());
+                });
+                $('[name="ids[]"]').val(getIds);
+
+                var getAction= $('[name="action"] option:selected').val();
+                if(getAction=='0' || getIds.length <=0){
+                    event.preventDefault();
+                }else{
+                    $('form[name="apply"]').attr("action", "{{url('tags')}}/delete/0/action=" + getAction);
+
+                }
+            });
         });
     </script>
 @endsection

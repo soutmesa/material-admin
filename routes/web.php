@@ -89,7 +89,7 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::patch('{id}',['as'=>'tags.update','uses'=>'TagController@update','middleware' => ['permission:tag-edit']]);
 		Route::get('{id}/delete-{act?}',['as'=>'tags.destroy','uses'=>'TagController@destroy','middleware' => ['permission:tag-delete']]);
 		Route::get('{id}/restore',['as'=>'tags.restore','uses'=>'TagController@restore']);
-		Route::get('?action={act?}',['as'=>'tags.bulk','uses'=>'TagController@destroy','middleware' => ['permission:tag-list|tag-create|tag-edit|tag-delete']]);
+		Route::post('/delete/{id?}/action={act?}',['as'=>'tags.bulk','uses'=>'TagController@destroy','middleware' => ['permission:tag-list|tag-create|tag-edit|tag-delete']]);
 	});
 });
 

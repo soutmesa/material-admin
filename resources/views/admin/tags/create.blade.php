@@ -59,7 +59,7 @@
                                 <br>
                                 {{ Form::textarea('description', old('description'), ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
                                 <br>
-                                {{ Form::submit('Publish', ['class'=>'btn btn-default'])}}
+                                {{ Form::submit('Publish', ['class'=>'btn btn-primary'])}}
 							{{ Form::close() }}
                         </div>
                     </div>
