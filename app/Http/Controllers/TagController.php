@@ -111,6 +111,6 @@ class TagController extends Controller
         }else{
             $this->tag->restore($id);
         }
-        return redirect('tags/status-tag=trashed')->withMessage('Tag has been restored !!!');
+        return redirect('tags/status-tag=all')->withMessage('Tag has been restored !!!');
     }
 }

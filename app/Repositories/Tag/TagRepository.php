@@ -55,7 +55,7 @@ class TagRepository implements TagInterface
                     $tag = $this->getById($i, "");
                     $tag->delete();
                 }else{
-                    $tag = $this->getById($i, "");
+                    $tag = $this->getById($i, $opt);
                     $tag->forceDelete();
                     $tag->authenticated()->detach(Auth::id());
                 }
