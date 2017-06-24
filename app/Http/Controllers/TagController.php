@@ -92,7 +92,7 @@ class TagController extends Controller
      */
     public function destroy($id,$act=null, Request $request=null)
     {
-        if(isset($request) && $request!=null){
+        if(isset($request) && count($request->all()) > 0){
             $ids = isset($request->all()['ids'][0])?$request->all()['ids'][0]:'0';
             $ids = explode(',',$ids);
             $this->tag->delete($ids, $act);
@@ -102,9 +102,15 @@ class TagController extends Controller
         return redirect('tags/status-tag=all')->withMessage('Tag has been deleted !!!');
     }
 
-    public function restore($id)
+    public function restore($id, Request $request=null)
     {
-        $this->tag->restore($id);
-        return redirect('tags/status-tag=all')->withMessage('Tag has been restored !!!');
+        if(isset($request) && count($request->all()) > 0 ){
+            $ids = isset($request->all()['ids'][0])?$request->all()['ids'][0]:'0';
+            $ids = explode(',',$ids);
+            $this->tag->restore($ids);
+        }else{
+            $this->tag->restore($id);
+        }
+        return redirect('tags/status-tag=trashed')->withMessage('Tag has been restored !!!');
     }
 }

@@ -94,7 +94,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Opps! you couldn't access with this link</div>
+                <div class="title">Opps! Page not found</div>
                 <a class="btn btn-primary" href="{{ url('') }}">Home</a>
             </div>
         </div>

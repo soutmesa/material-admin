@@ -66,9 +66,16 @@
                             </p>
                             {{ Form::open([null, 'class'=>'col-md-3', 'style="', 'padding: 0px !important;"', 'name'=>'apply']) }}
                                 {{ Form::hidden('ids[]', null) }}
+                                @if(Request::is('*status-tag=trashed'))
+                                <div class="form-group col-md-8" style="padding: 0px;">
+                                    {{ Form::select('action', ['0'=>'Bulk Actions', 'force'=>'Delete','restore'=>'Restore'], null,['class'=>'form-control']) }}
+                                </div>
+                                @else
                                 <div class="form-group col-md-8" style="padding: 0px;">
                                     {{ Form::select('action', ['0'=>'Bulk Actions', 'force'=>'Delete','trash'=>'Move to Trash'], null,['class'=>'form-control']) }}
                                 </div>
+                                @endif
+
                                 <div class="form-group col-md-4" style="padding: 0px;">
                                     {{ Form::submit('Apply', ['class'=>'btn btn-primary apply']) }}
                                 </div>
@@ -107,12 +114,12 @@
                                         @if(Request::is('*trashed'))
                                         <td align="center">
                                             <a class="btn btn-xs btn-icon btn-circle btn-info" href="{{ route('tags.restore', $tag->id) }}"><i class="fa fa-repeat"></i></a> | 
-                                            <a href="{{ route('tags.destroy', [$tag->id,'force']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
+                                            <a href="{{ route('tags.destroy', ['id'=>$tag->id, 'act'=>'force']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
                                         </td>
                                         @else
                                         <td align="center">
                                             <a class="btn btn-xs btn-icon btn-circle btn-warning" href="{{ route('tags.edit', $tag->id) }}"><i class="fa fa-edit"></i></a> | 
-                                            <a href="{{ route('tags.destroy', [$tag->id, 'trash']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
+                                            <a href="{{ route('tags.destroy', ['id'=>$tag->id, 'act'=>'trash']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
                                         </td>
                                         @endif
                                     </tr>
@@ -293,7 +300,15 @@
                 if(getAction=='0' || getIds.length <=0){
                     event.preventDefault();
                 }else{
-                    $('form[name="apply"]').attr("action", "{{url('tags')}}/delete/0/action=" + getAction);
+                   // event.preventDefault();
+                    var isTrue = "{{ Request::is('*trashed') }}";
+                    if( isTrue == "1" && (getAction == "restore") ){
+                        $('form[name="apply"]').attr("action", "{{url('tags')}}/0/restore/action=" + getAction);
+                        console.log('restore');
+                    }else{
+                        $('form[name="apply"]').attr("action", "{{url('tags')}}/delete/0/action=" + getAction);
+                        console.log('trash');
+                    }
 
                 }
             });

@@ -51,11 +51,11 @@ class TagRepository implements TagInterface
     {
         if(is_array($id)){
             foreach($id as $i){
-                $tag = $this->getById($i, $opt);
                 if($opt == "trash"){
+                    $tag = $this->getById($i, "");
                     $tag->delete();
                 }else{
-                    $tag = $this->getById($id, $opt);
+                    $tag = $this->getById($i, "");
                     $tag->forceDelete();
                     $tag->authenticated()->detach(Auth::id());
                 }
@@ -75,7 +75,15 @@ class TagRepository implements TagInterface
 
     public function restore($id)
     {
-        $tag = $this->getById($id, 'force');
-        return $tag->restore();
+        if(is_array($id)){
+            foreach($id as $i){
+                $tag = $this->getById($i, "force");
+                $tag->restore();
+            }
+        }else{
+            $tag = $this->getById($id, 'force');
+            $tag->restore();
+        }
+        return true;
     }
 }

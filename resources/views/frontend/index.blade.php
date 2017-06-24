@@ -259,12 +259,9 @@
                     <div class="section-container">
                         <h4 class="section-title"><span>Categories</span></h4>
                         <ul class="sidebar-list">
-                            <li><a href="#">Sports (20)</a></li>
-                            <li><a href="#">Outdoor Sports (45)</a></li>
-                            <li><a href="#">Indoor Sports (1,292)</a></li>
-                            <li><a href="#">Video Shooting (12)</a></li>
-                            <li><a href="#">Drone (229)</a></li>
-                            <li><a href="#">Uncategorized (1,482)</a></li>
+                            @foreach($categories as $category)
+                            <li><a href="#">{{ ucfirst($category->name) }} ({{ $category->posts->count() }})</a></li>
+                            @endforeach
                         </ul>
                     </div>
                     <!-- end section-container -->
@@ -272,36 +269,14 @@
                     <div class="section-container">
                         <h4 class="section-title"><span>Recent Post</span></h4>
                         <ul class="sidebar-recent-post">
+                            @foreach($posts as $post)
                             <li>
                                 <div class="info">
-                                    <h4 class="title"><a href="#">Lorem ipsum dolor sit amet.</a></h4>
-                                    <div class="date">23 December 2015</div>
+                                    <h4 class="title" title="{{ $post->title }}"><a href="#">{{ str_limit($post->title, 30) }}</a></h4>
+                                    <div class="date">{{ $post->created_at }}</div>
                                 </div>
                             </li>
-                            <li>
-                                <div class="info">
-                                    <h4 class="title"><a href="#">Vestibulum a cursus arcu.</a></h4>
-                                    <div class="date">16 December 2015</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="info">
-                                    <h4 class="title"><a href="#">Nullam vel condimentum lectus. </a></h4>
-                                    <div class="date">7 December 2015</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="info">
-                                    <h4 class="title"><a href="#">Proin in dui egestas libero posuere ullamcorper. </a></h4>
-                                    <div class="date">20 November 2015</div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="info">
-                                    <h4 class="title"><a href="#">Interdum et malesuada fames ac ante.</a></h4>
-                                    <div class="date">5 November 2015</div>
-                                </div>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                     <!-- end section-container -->

@@ -87,9 +87,10 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::post('new',['as'=>'tags.store','uses'=>'TagController@store','middleware' => ['permission:tag-create']]);
 		Route::get('{id}/edit',['as'=>'tags.edit','uses'=>'TagController@edit','middleware' => ['permission:tag-edit']]);
 		Route::patch('{id}',['as'=>'tags.update','uses'=>'TagController@update','middleware' => ['permission:tag-edit']]);
-		Route::get('{id}/delete-{act?}',['as'=>'tags.destroy','uses'=>'TagController@destroy','middleware' => ['permission:tag-delete']]);
-		Route::get('{id}/restore',['as'=>'tags.restore','uses'=>'TagController@restore']);
-		Route::post('/delete/{id?}/action={act?}',['as'=>'tags.bulk','uses'=>'TagController@destroy','middleware' => ['permission:tag-list|tag-create|tag-edit|tag-delete']]);
+		Route::get('{id}/delete={act}',['as'=>'tags.destroy','uses'=>'TagController@destroy','middleware' => ['permission:tag-delete']]);
+        Route::post('/delete/{id?}/action={act?}',['as'=>'tags.bulk','uses'=>'TagController@destroy']);
+        Route::get('{id}/restore',['as'=>'tags.restore','uses'=>'TagController@restore']);
+        Route::post('{id}/restore/action={act?}',['as'=>'tags.bulk.restore','uses'=>'TagController@restore']);
 	});
 });
 

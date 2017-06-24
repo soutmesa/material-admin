@@ -24,7 +24,7 @@ class Category extends Model
 
     public function posts()
     {
-        return $this->belongsToMany('App\Databases\Post', 'category_post', 'post_id', 'cate_id')->withTimestamps();
+        return $this->belongsToMany('App\Databases\Post', 'category_post', 'cate_id', 'post_id')->withTimestamps();
     }
 
     public function authenticated()
