@@ -30,6 +30,7 @@
 
             <!-- begin row -->
 			<div class="row">
+                {{ Form::open(['route'=>'tags.store']) }}
                 <!-- begin col-8 -->
                 <div class="col-md-8">
 			        <!-- begin panel -->
@@ -41,7 +42,7 @@
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                             </div>
-                            <h4 class="panel-title">Post - New</h4>
+                            <h4 class="panel-title">Tag - New</h4>
                         </div>
                         <div class="panel-body">
                             @if(count($errors))
@@ -54,13 +55,12 @@
                                     </ol>
                                 </div>
                             @endif
-                            {{ Form::open(['route'=>'tags.store']) }}
-                                {{ Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Enter name ...']) }}
-                                <br>
-                                {{ Form::textarea('description', old('description'), ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
-                                <br>
-                                {{ Form::submit('Publish', ['class'=>'btn btn-primary'])}}
-							{{ Form::close() }}
+                            {{ Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Enter name ...']) }}
+                            <br>
+                            {{ Form::textarea('description', old('description'), ['class'=>'textarea form-control', 'id'=>'editable', 'placeholder'=>'Enter text ...']) }}
+                            <br>
+                            {{ Form::submit('Publish', ['class'=>'btn btn-primary'])}}
+							
                         </div>
                     </div>
                     <!-- end panel -->
@@ -83,6 +83,7 @@
                         </div>
                     </div>
                 </div>
+                {{ Form::close() }}
             </div>
             <!-- end row -->
         </div>
@@ -165,11 +166,9 @@
 @endsection
 
 @section ('scripts')
-	<script type="text/javascript" src="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.all.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('assets/js/form-wysiwyg.demo.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/plugins/tinymce/tinymce.min.js')}}"></script>
 	<script type="text/javascript" type="text/javascript">
 		$(document).ready(function() {
-			FormWysihtml5.init();
 
             function disabledAlert()
             {
@@ -183,7 +182,40 @@
                 }
             }
             $('.close').on('click', function(){
+                cosole.log('hello');
                 disabledAlert();
+            });
+
+            tinymce.init({
+                selector: '#editable',
+                language: 'fr_FR', 
+                height: 150, 
+                branding: false,
+                paste_data_images: true,    
+                plugins: [
+                  // "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                  "searchreplace wordcount visualblocks visualchars code fullscreen",
+                  // "insertdatetime media nonbreaking save table contextmenu directionality",
+                  // "emoticons paste textcolor colorpicker textpattern"
+                ],
+                // toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                // toolbar2: "print preview media | forecolor backcolor emoticons",
+                image_advtab: true,
+                // file_picker_callback: function(callback, value, meta) {
+                //   if (meta.filetype == 'image') {
+                //     $('#upload').trigger('click');
+                //     $('#upload').on('change', function() {
+                //       var file = this.files[0];
+                //       var reader = new FileReader();
+                //       reader.onload = function(e) {
+                //         callback(e.target.result, {
+                //           alt: ''
+                //         });
+                //       };
+                //       reader.readAsDataURL(file);
+                //     });
+                //   }
+                // },
             });
 		});
 	</script>	

@@ -90,14 +90,14 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,$act=null, Request $request=null)
+    public function destroy($id,$act=null, $trashed=null, Request $request=null)
     {
         if(isset($request) && count($request->all()) > 0){
             $ids = isset($request->all()['ids'][0])?$request->all()['ids'][0]:'0';
             $ids = explode(',',$ids);
-            $this->tag->delete($ids, $act);
+            $this->tag->delete($ids, $act, $trashed);
         }else{
-            $this->tag->delete($id, $act);
+            $this->tag->delete($id, $act, $trashed);
         }
         return redirect('tags/status-tag=all')->withMessage('Tag has been deleted !!!');
     }

@@ -114,12 +114,12 @@
                                         @if(Request::is('*trashed'))
                                         <td align="center">
                                             <a class="btn btn-xs btn-icon btn-circle btn-info" href="{{ route('tags.restore', $tag->id) }}"><i class="fa fa-repeat"></i></a> | 
-                                            <a href="{{ route('tags.destroy', ['id'=>$tag->id, 'act'=>'force']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
+                                            <a href="{{ route('tags.destroy', ['id'=>$tag->id, 'act'=>'force', 'trashed'=>'1']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
                                         </td>
                                         @else
                                         <td align="center">
                                             <a class="btn btn-xs btn-icon btn-circle btn-warning" href="{{ route('tags.edit', $tag->id) }}"><i class="fa fa-edit"></i></a> | 
-                                            <a href="{{ route('tags.destroy', ['id'=>$tag->id, 'act'=>'trash']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
+                                            <a href="{{ route('tags.destroy', ['id'=>$tag->id, 'act'=>'trash', 'trashed'=>'0']) }}" class="btn btn-xs btn-icon btn-circle btn-danger"><i class="fa fa-times"></i></a>
                                         </td>
                                         @endif
                                     </tr>
@@ -301,13 +301,11 @@
                     event.preventDefault();
                 }else{
                    // event.preventDefault();
-                    var isTrue = "{{ Request::is('*trashed') }}";
+                    var isTrue = "{{ Request::is('*trashed')? '1':'0' }}";
                     if( isTrue == "1" && (getAction == "restore") ){
                         $('form[name="apply"]').attr("action", "{{url('tags')}}/0/restore/action=" + getAction);
-                        console.log('restore');
                     }else{
-                        $('form[name="apply"]').attr("action", "{{url('tags')}}/delete/0/action=" + getAction);
-                        console.log('trash');
+                        $('form[name="apply"]').attr("action", "{{url('tags')}}/delete/0/action=" + getAction + "&trashed=" + isTrue);
                     }
 
                 }

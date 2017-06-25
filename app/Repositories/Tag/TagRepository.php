@@ -26,9 +26,9 @@ class TagRepository implements TagInterface
         return $tags;
     }
 
-    public function getById($id, $opt)
+    public function getById($id, $trashed)
     {
-        if(isset($opt) && $opt == "force"){
+        if(isset($trashed) && $trashed == "1"){
             return$this->tag->onlyTrashed()->where('id', '=', $id)->get()->first();
         }
         return $this->tag->findOrFail($id);
@@ -47,21 +47,21 @@ class TagRepository implements TagInterface
         return $this->tag;
     }
 
-    public function delete($id, $opt)
+    public function delete($id, $opt, $trashed)
     {
         if(is_array($id)){
             foreach($id as $i){
                 if($opt == "trash"){
-                    $tag = $this->getById($i, "");
+                    $tag = $this->getById($i, $trashed);
                     $tag->delete();
                 }else{
-                    $tag = $this->getById($i, $opt);
+                    $tag = $this->getById($i, $trashed);
                     $tag->forceDelete();
                     $tag->authenticated()->detach(Auth::id());
                 }
             }
         }else{
-            $tag = $this->getById($id, $opt);
+            $tag = $this->getById($id, $trashed);
             if($opt == "trash"){
                 $tag->delete();
             }else{
@@ -77,11 +77,11 @@ class TagRepository implements TagInterface
     {
         if(is_array($id)){
             foreach($id as $i){
-                $tag = $this->getById($i, "force");
+                $tag = $this->getById($i, "1");
                 $tag->restore();
             }
         }else{
-            $tag = $this->getById($id, 'force');
+            $tag = $this->getById($id, '1');
             $tag->restore();
         }
         return true;

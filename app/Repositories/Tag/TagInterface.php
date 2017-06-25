@@ -13,5 +13,5 @@ interface TagInterface
 
     public function update($id, $datas);
 
-    public function delete($id, $opt);
+    public function delete($id, $opt, $trashed);
 }

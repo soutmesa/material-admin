@@ -58,7 +58,8 @@
                             @endif
                             {{ Form::text('title', old('title'), ['class'=>'form-control', 'placeholder'=>'Enter title ...']) }}
                             <br>
-                            {{ Form::textarea('body', old('body'), ['class'=>'textarea form-control', 'rows'=>'12', 'id'=>'wysihtml5', 'placeholder'=>'Enter text ...']) }}
+                            {{ Form::textarea('body', old('body'), ['class'=>'textarea form-control', 'id'=>'editable', 'placeholder'=>'Enter text ...']) }}
+                            <input name="images" value="" type="file" id="upload" class="hidden" onchange="">
                         </div>
                     </div>
                     <!-- end panel -->
@@ -179,12 +180,11 @@
 @endsection
 
 @section ('scripts')
-	<script type="text/javascript" src="{{asset('assets/plugins/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.all.min.js')}}"></script>
-	<script type="text/javascript" src="{{asset('assets/js/form-wysiwyg.demo.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/plugins/tinymce/tinymce.min.js')}}"></script>
     <script src="{{asset('assets/plugins/select2/dist/js/select2.min.js')}}"></script>
 	<script type="text/javascript" type="text/javascript">
 		$(document).ready(function() {
-			FormWysihtml5.init();
+			// FormWysihtml5.init();
 
             $('.multiple-select2.category').select2({
                 placeholder: " Select Categories"
@@ -207,6 +207,38 @@
             }
             $('.close').on('click', function(){
                 disabledAlert();
+            });
+
+            tinymce.init({
+                selector: '#editable',
+                language: 'fr_FR', 
+                height: 150, 
+                branding: false,
+                paste_data_images: true,    
+                plugins: [
+                  "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                  "searchreplace wordcount visualblocks visualchars code fullscreen",
+                  "insertdatetime media nonbreaking save table contextmenu directionality",
+                  "emoticons paste textcolor colorpicker textpattern"
+                ],
+                toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                toolbar2: "print preview media | forecolor backcolor emoticons",
+                image_advtab: true,
+                file_picker_callback: function(callback, value, meta) {
+                  if (meta.filetype == 'image') {
+                    $('#upload').trigger('click');
+                    $('#upload').on('change', function() {
+                      var file = this.files[0];
+                      var reader = new FileReader();
+                      reader.onload = function(e) {
+                        callback(e.target.result, {
+                          alt: ''
+                        });
+                      };
+                      reader.readAsDataURL(file);
+                    });
+                  }
+                },
             });
 		});
 	</script>	
