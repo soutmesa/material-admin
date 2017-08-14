@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Databases\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\TagUpdateRequest;
 use App\Http\Requests\TagRequest;
@@ -18,8 +19,9 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($opt=null)
+    public function index($opt=null, Request $request)
     {
+
         $tags = $this->tag->getAll($opt);
         $trashed = count($this->tag->getAll("trashed"));
         $published = count($this->tag->getAll(""));
@@ -112,5 +114,32 @@ class TagController extends Controller
             $this->tag->restore($id);
         }
         return redirect('tags/status-tag=all')->withMessage('Tag has been restored !!!');
+    }
+
+    private function MultiSoftDeletes($items)
+    {
+        foreach($items as $item){
+            $tag = Tag::findOrFail($item);
+            $tag->delete();
+        }
+        return redirect()->back()->with('msg', "La  a été supprimée");
+    }
+
+    private function MultiForceDeletes($items)
+    {
+        foreach($items as $item){
+            $tag = Tag::withTrashed()->findOrFail($item);
+            $tag->forceDelete();
+        }
+        return redirect()->back()->with('msg', "La a été supprimée");
+    }
+
+    private function MultiRestores($items)
+    {
+        foreach($items as $item){
+            $tag = Tag::onlyTrashed()->findOrFail($item);
+            $tag->restore();
+        }
+        return redirect()->back()->with('msg', "Les ont été restaurées");
     }
 }
